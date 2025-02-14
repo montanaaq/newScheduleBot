@@ -4342,3 +4342,18 @@ Traceback (most recent call last):
 TimeoutError: [Errno 60] Operation timed out
 2025-02-14 16:21:58,645 - INFO - Stop polling...
 2025-02-14 16:21:58,651 - WARNING - Goodbye!
+2025-02-14 16:51:22,404 - INFO - Запуск бота...
+2025-02-14 16:51:22,430 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://10.27.1.74:80
+2025-02-14 16:51:22,430 - INFO - [33mPress CTRL+C to quit[0m
+2025-02-14 16:51:25,843 - INFO - Bot: Бот расписаний Гимназии №33 [@gymn33_bot]
+2025-02-14 16:51:26,038 - INFO - Attempting refresh to obtain initial access_token
+2025-02-14 16:51:26,051 - INFO - Refreshing access_token
+2025-02-14 16:51:29,947 - INFO - Бот запущен!
+2025-02-14 16:51:32,821 - INFO - Start polling.
+2025-02-14 16:51:35,862 - INFO - 127.0.0.1 - - [14/Feb/2025 16:51:35] "GET / HTTP/1.1" 200 -
+2025-02-14 16:51:36,039 - INFO - 127.0.0.1 - - [14/Feb/2025 16:51:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-14 16:51:46,802 - INFO - Stop polling...
+2025-02-14 16:51:46,803 - WARNING - Goodbye!

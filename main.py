@@ -1,8 +1,10 @@
 import asyncio
 import json
 import logging
+import os
 from datetime import datetime
 from pprint import pprint
+from background import keep_alive
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -10,11 +12,11 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.utils import executor
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from dotenv import load_dotenv
 
 import keyboards as kb
 import messages as msg
 import sheets
-from config import BOT_TOKEN
 from database import (create_tables, get_schedule_db_connection,
                       get_users_db_connection)
 
@@ -31,6 +33,9 @@ logger = logging.getLogger(__name__)
 
 users_db = get_users_db_connection()
 users_cursor = users_db.cursor()
+
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 storage = MemoryStorage()
 bot = Bot(token=BOT_TOKEN)
@@ -283,8 +288,8 @@ async def help(message: types.Message):
 async def notify(message: types.Message):
     if message.from_user.id == message.chat.id:
         await bot.send_message(chat_id=message.chat.id,
-                                   text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
-                                   reply_markup=kb.notify_keyboard)
+                               text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
+                               reply_markup=kb.notify_keyboard)
     else:
         await bot.send_message(chat_id=message.chat.id, text="Данная функция работает только в личных сообщениях!")
 
@@ -404,7 +409,7 @@ async def func(message: types.Message):
         await bot.send_message(chat_id=message.from_user.id, text='Профиль', reply_markup=markup)
     if (message.text == 'Учителя'):
         await bot.send_message(chat_id=message.chat.id, text=teachers, parse_mode='html')
-    
+
     if (message.text == 'Оповещения'):
         await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
         if message.from_user.id == message.chat.id:
@@ -523,6 +528,7 @@ async def callback(call: types.CallbackQuery) -> None:
         await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await off_notify(call.message)
 
+keep_alive()
 if __name__ == '__main__':
     logger.info("Запуск бота...")
     executor.start_polling(dp, skip_updates=False, on_startup=on_startup)
