@@ -2,9 +2,9 @@ import asyncio
 import json
 import logging
 import os
+from contextlib import asynccontextmanager
 from datetime import datetime
 from pprint import pprint
-from background import keep_alive
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -13,6 +13,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.utils import executor
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 import keyboards as kb
 import messages as msg
@@ -36,12 +38,94 @@ users_cursor = users_db.cursor()
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+WEBHOOK_PATH = "/webhook"
+PORT = int(os.getenv('PORT', 8000))
 
 storage = MemoryStorage()
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
 teachers = ''
+
+# Конструируем WEBHOOK_URL
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    if RENDER_EXTERNAL_HOSTNAME.startswith("http://") or RENDER_EXTERNAL_HOSTNAME.startswith("https://"):
+        RENDER_EXTERNAL_HOSTNAME = RENDER_EXTERNAL_HOSTNAME.split("://")[1]
+    WEBHOOK_URL = f"https://{RENDER_EXTERNAL_HOSTNAME}{WEBHOOK_PATH}"
+else:
+    # Для локальной разработки используйте ngrok URL если необходимо
+    # Замените на ваш реальный ngrok URL
+    WEBHOOK_URL = os.getenv(
+        'WEBHOOK_URL', "https://6f06-95-26-82-58.ngrok-free.app/webhook")
+
+
+app = FastAPI(lifespan=lambda app: lifespan(app))
+# ==========================
+# Маршруты FastAPI
+# ==========================
+
+
+@app.get("/health")
+async def health_check():
+    return JSONResponse(content={"status": "ok"}, status_code=200)
+
+
+@app.get("/webhook/status")
+async def webhook_status():
+    try:
+        # Получаем информацию о текущем вебхуке
+        webhook_info = await bot.get_webhook_info()
+
+        return {
+            "url": webhook_info.url,
+            "is_set": bool(webhook_info.url),
+            "pending_update_count": webhook_info.pending_update_count,
+            "last_error_date": webhook_info.last_error_date,
+            "last_error_message": webhook_info.last_error_message,
+            "max_connections": webhook_info.max_connections
+        }
+    except Exception as e:
+        logger.error(f"Error checking webhook status: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Failed to retrieve webhook status"}
+        )
+
+
+@app.post(WEBHOOK_PATH)
+async def telegram_webhook(request: Request):
+    try:
+        update_data = await request.json()
+        update = types.Update(**update_data)
+
+        Dispatcher.set_current(dp)
+        Bot.set_current(bot)
+
+        await dp.process_update(update)
+
+        return JSONResponse(content={"status": "ok"}, status_code=200)
+    except Exception as e:
+        logger.error(f"Не удалось обработать обновление: {e}")
+        return JSONResponse(content={"status": "error", "message": str(e)}, status_code=400)
+
+# ==========================
+# Lifespan Event Handlers
+# ==========================
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = AsyncIOScheduler()
+    scheduler.start()
+    webhook_info = await bot.get_webhook_info()
+    if webhook_info.url != WEBHOOK_URL:
+        await bot.set_webhook(url=WEBHOOK_URL)
+        logger.info(f"Webhook установлен на {WEBHOOK_URL}")
+
+    yield
+    scheduler.shutdown()
+    await bot.session.close()
 
 
 async def read_data_start():
@@ -528,7 +612,6 @@ async def callback(call: types.CallbackQuery) -> None:
         await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await off_notify(call.message)
 
-keep_alive()
 if __name__ == '__main__':
     logger.info("Запуск бота...")
     executor.start_polling(dp, skip_updates=False, on_startup=on_startup)

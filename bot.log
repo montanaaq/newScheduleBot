@@ -4711,3 +4711,26 @@ KeyboardInterrupt
 2025-02-19 00:11:09,149 - INFO - Start polling.
 2025-02-19 00:14:27,686 - INFO - Stop polling...
 2025-02-19 00:14:27,689 - WARNING - Goodbye!
+2025-02-19 00:40:08,887 - INFO - Запуск бота...
+2025-02-19 00:40:09,546 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 00:40:09,744 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 00:40:09,763 - INFO - Refreshing access_token
+2025-02-19 00:40:10,308 - INFO - Failed to retrieve access token: {"error":"invalid_grant","error_description":"Invalid JWT Signature."}
+2025-02-19 00:40:10,311 - WARNING - Goodbye!
+2025-02-19 00:41:36,641 - INFO - Запуск бота...
+2025-02-19 00:41:37,177 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-19 00:41:37,374 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 00:41:37,388 - INFO - Refreshing access_token
+2025-02-19 00:41:37,838 - INFO - Failed to retrieve access token: {"error":"invalid_grant","error_description":"Invalid JWT Signature."}
+2025-02-19 00:41:37,840 - WARNING - Goodbye!
+2025-02-19 00:48:36,431 - INFO - Запуск бота...
+2025-02-19 00:48:37,037 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 00:48:37,226 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 00:48:37,243 - INFO - Refreshing access_token
+2025-02-19 00:48:40,555 - INFO - Бот запущен!
+2025-02-19 00:48:42,994 - INFO - Start polling.
+2025-02-19 00:48:43,184 - INFO - Команда /start от пользователя 984383301
+2025-02-19 00:48:43,190 - INFO - Команда /start от пользователя 984383301
+2025-02-19 00:48:43,191 - INFO - Команда /start от пользователя 984383301
+2025-02-19 00:49:15,420 - INFO - Stop polling...
+2025-02-19 00:49:15,421 - WARNING - Goodbye!
