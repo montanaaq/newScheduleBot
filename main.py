@@ -46,7 +46,7 @@ teachers = ''
 
 async def read_data_start():
     global classes, schedule
-    class_data = await sheets.read_from_sheets('B1:E1', 'ROWS')
+    class_data = await sheets.read_from_sheets('B1:V1', 'ROWS')
     classes = [class_name.strip() for class_name in class_data['values'][0]]
     schedule = await sheets.get_schedule_start()
     print("Классы:", classes)
@@ -71,7 +71,7 @@ async def update_data():
 
     while True:
         current_schedule_data = await sheets.read_from_sheets(
-            range_of_read="Расписание!A2:E", type_of_dimension="ROWS"
+            range_of_read="Расписание!A2:V", type_of_dimension="ROWS"
         )
         current_schedule_hash = await sheets.get_data_hash(current_schedule_data)
 
