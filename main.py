@@ -248,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup(_):
+async def on_startup():
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
