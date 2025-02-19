@@ -248,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup():
+async def on_startup(_):
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
@@ -562,92 +562,78 @@ async def func(message: types.Message):
         markup.row(kb.unregister)
         await bot.send_message(chat_id=message.from_user.id, text='Профиль', reply_markup=markup)
 
-    pagination_cb = CallbackData('nav', 'action', 'page')
-
-    # Добавить эти функции в основной код (не внутри обработчиков)
-    async def get_teachers_paginated(page: int = 0, per_page: int = 10):
-        """Возвращает страницу с учителями и общее количество страниц"""
-        teacher_data = await sheets.get_teachers_from_sheets()
-        if 'values' not in teacher_data:
-            return None, 0
-        
-        teachers = [row for row in teacher_data['values'] if len(row) >= 2]
-        total = len(teachers)
-        pages = (total + per_page - 1) // per_page
-        start = page * per_page
-        end = start + per_page
-        
-        return teachers[start:end], pages
-
-    async def format_teachers_page(page: int = 0):
-        """Форматирует страницу с учителями"""
-        teachers, total_pages = await get_teachers_paginated(page)
-        if not teachers:
-            return "❌ Список учителей не найден.", None
-        
-        message_text = '👨‍🏫 <b>Список учителей:</b>\n'
-        message_text += '—' * 20 + '\n'
-        
-        for idx, row in enumerate(teachers, start=1):
-            subject, teacher_name = row
-            message_text += f"👨‍🏫 <b>{subject}</b>\n<code>{teacher_name}</code>\n"
-            message_text += '—' * 20 + '\n'
-        
-        message_text += f"\nСтраница {page + 1} из {total_pages}"
-        
-        keyboard = types.InlineKeyboardMarkup()
-        if page > 0:
-            keyboard.add(
-                types.InlineKeyboardButton(
-                    "⬅ Назад", 
-                    callback_data=pagination_cb.new(action="prev", page=page)
-                )
-            )
-        if page < total_pages - 1:
-            keyboard.add(
-                types.InlineKeyboardButton(
-                    "Вперед ➡", 
-                    callback_data=pagination_cb.new(action="next", page=page)
-                )
-            )
-        
-        return message_text, keyboard
-
-    # Добавить обработчик пагинации (вместо текущего @dp.callback_query_handler())
-    @dp.callback_query_handler(pagination_cb.filter(action=['prev', 'next']))
-    async def pagination_handler(call: types.CallbackQuery, callback_data: dict):
-        """Обработчик нажатий на кнопки пагинации"""
-        action = callback_data['action']
-        current_page = int(callback_data['page'])
-        
-        if action == 'prev':
-            new_page = max(current_page - 1, 0)
-        elif action == 'next':
-            new_page = current_page + 1
-        
-        text, keyboard = await format_teachers_page(new_page)
-        await call.message.edit_text(text, parse_mode='HTML', reply_markup=keyboard)
-        await call.answer()
-
-    # Изменить блок обработки команды "Учителя":
-    if (message.text == 'Учителя'):
-        teachers_text, keyboard = await format_teachers_page()
-        await bot.send_message(chat_id=message.chat.id, text=teachers_text, parse_mode='HTML', reply_markup=keyboard)
-
     if (message.text == 'Оповещения'):
         if message.from_user.id == message.chat.id:
             await bot.send_message(chat_id=message.chat.id,
-                                        text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
-                                        reply_markup=kb.notify_keyboard)
+                                   text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
+                                   reply_markup=kb.notify_keyboard)
         else:
             await bot.send_message(chat_id=message.chat.id, text="Данная функция работает только в личных сообщениях!")
-
+    if (message.text == 'Учителя'):
+        message_text, keyboard = await create_page()
+        await message.answer(message_text, parse_mode='HTML', reply_markup=keyboard)
     if class_id == '':
         if message.text not in formatted_messages and message.chat.id in users_id or message.chat.id in users_unregister:
             await bot.send_message(chat_id=message.chat.id, text='Мы не нашли вас в базе данных, попробуйте <b>/start</b> и повторите попытку! Пишите класс в формате: <b>11Т</b>', parse_mode='html')
     else:
         if message.text not in formatted_messages:
             await bot.send_message(chat_id=message.chat.id, text='Я тебя не понимаю... Используй /help')
+pagination_cb = CallbackData('teachers', 'action', 'page')
+
+
+async def get_teachers_data() -> list:
+    """Получает и форматирует данные учителей"""
+    teachers_text = await sheets.format_teachers_list()
+    teachers = teachers_text.split('—' * 20 + '\n')
+    return [t.strip() for t in teachers if t.strip()]
+
+
+async def create_page(page: int = 0, per_page: int = 10) -> tuple:
+    """Создает страницу с учителями и разделителями"""
+    all_teachers = await get_teachers_data()
+    total_pages = (len(all_teachers) + per_page - 1) // per_page
+    
+    start = page * per_page
+    end = start + per_page
+    page_teachers = all_teachers[start:end]
+    
+    # Формируем сообщение с разделителями
+    separator = '\n' + '—' * 20 + '\n'
+    message_text = f"👨🏫 <b>Список учителей:</b>\n\n"
+    message_text += separator.join(page_teachers)
+    message_text += f"\n\n<b>Страница {page + 1} из {total_pages}</b>"
+    
+    # Создаем клавиатуру
+    keyboard = types.InlineKeyboardMarkup(row_width=2)
+    buttons = []
+    
+    if page > 0:
+        buttons.append(types.InlineKeyboardButton(
+            "⬅ Назад", 
+            callback_data=pagination_cb.new(action="prev", page=page-1)
+        ))
+    if page < total_pages - 1:
+        buttons.append(types.InlineKeyboardButton(
+            "Вперед ➡", 
+            callback_data=pagination_cb.new(action="next", page=page+1)
+        ))
+    
+    if buttons:
+        keyboard.add(*buttons)
+    
+    return message_text, keyboard
+
+
+@dp.callback_query_handler(pagination_cb.filter(action=['prev', 'next']))
+async def pagination_handler(call: types.CallbackQuery, callback_data: dict):
+    """Обработчик пагинации"""
+    page = int(callback_data['page'])
+    action = callback_data['action']
+
+    # Обновляем страницу
+    message_text, keyboard = await create_page(page)
+    await call.message.edit_text(message_text, parse_mode='HTML', reply_markup=keyboard)
+    await call.answer()
 
 
 async def proccess_unregister(id: int):
@@ -739,3 +725,6 @@ async def callback(call: types.CallbackQuery) -> None:
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
+    # from aiogram.utils import executor
+    # executor.start_polling(
+    #     dispatcher=dp, on_startup=on_startup, skip_updates=False)
