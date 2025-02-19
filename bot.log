@@ -4734,3 +4734,474 @@ KeyboardInterrupt
 2025-02-19 00:48:43,191 - INFO - Команда /start от пользователя 984383301
 2025-02-19 00:49:15,420 - INFO - Stop polling...
 2025-02-19 00:49:15,421 - WARNING - Goodbye!
+2025-02-19 22:31:40,103 - INFO - Запуск бота...
+2025-02-19 22:31:40,535 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:31:40,677 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:31:40,689 - INFO - Refreshing access_token
+2025-02-19 22:31:44,119 - INFO - Бот запущен!
+2025-02-19 22:31:46,740 - INFO - Start polling.
+2025-02-19 22:31:53,101 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:31:56,517 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-17' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=MessageToDeleteNotFound('Message to delete not found')>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 593, in callback
+    await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/bot.py", line 3300, in delete_message
+    return await self.request(api.Methods.DELETE_MESSAGE, payload)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/utils/exceptions.py", line 140, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.MessageToDeleteNotFound: Message to delete not found
+2025-02-19 22:31:57,698 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:31:57,846 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-19 22:32:00,506 - INFO - Пользователь 984383301 ввел класс 1А и расписание сохранено.
+2025-02-19 22:33:15,257 - INFO - Stop polling...
+2025-02-19 22:33:15,260 - WARNING - Goodbye!
+2025-02-19 22:33:18,173 - INFO - Запуск бота...
+2025-02-19 22:33:19,119 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:33:19,261 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:33:19,270 - INFO - Refreshing access_token
+2025-02-19 22:33:22,643 - INFO - Бот запущен!
+2025-02-19 22:33:25,180 - INFO - Start polling.
+2025-02-19 22:33:44,041 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:33:44,169 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-19 22:33:47,606 - INFO - Пользователь 984383301 ввел класс 1А и расписание сохранено.
+2025-02-19 22:34:29,354 - INFO - Stop polling...
+2025-02-19 22:34:29,355 - WARNING - Goodbye!
+2025-02-19 22:34:31,475 - INFO - Запуск бота...
+2025-02-19 22:34:31,869 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:34:32,005 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:34:32,016 - INFO - Refreshing access_token
+2025-02-19 22:34:37,617 - INFO - Бот запущен!
+2025-02-19 22:34:40,338 - INFO - Start polling.
+2025-02-19 22:35:03,717 - INFO - Stop polling...
+2025-02-19 22:35:03,725 - WARNING - Goodbye!
+2025-02-19 22:35:06,909 - INFO - Запуск бота...
+2025-02-19 22:35:07,487 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:35:07,632 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:35:07,643 - INFO - Refreshing access_token
+2025-02-19 22:35:10,859 - INFO - Бот запущен!
+2025-02-19 22:35:13,503 - INFO - Start polling.
+2025-02-19 22:35:29,756 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-44' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=MessageToDeleteNotFound('Message to delete not found')>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 590, in callback
+    await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/bot.py", line 3300, in delete_message
+    return await self.request(api.Methods.DELETE_MESSAGE, payload)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/utils/exceptions.py", line 140, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.MessageToDeleteNotFound: Message to delete not found
+2025-02-19 22:35:32,024 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:35:32,195 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-19 22:35:34,848 - WARNING - Расписание не найдено для класса 9И от пользователя 984383301.
+2025-02-19 22:35:37,290 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:35:37,441 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-19 22:35:38,663 - INFO - Пользователь 984383301 ввел класс 9А и расписание сохранено.
+2025-02-19 22:40:54,729 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-4' coro=<update_data() done, defined at main.py:151> exception=TimeoutError(60, 'Operation timed out')>
+Traceback (most recent call last):
+  File "main.py", line 157, in update_data
+    current_schedule_data = await sheets.read_from_sheets(
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/sheets.py", line 24, in read_from_sheets
+    values = service.spreadsheets().values().get(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 923, in execute
+    resp, content = _retry_request(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 222, in _retry_request
+    raise exception
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/oauth2client/transport.py", line 173, in new_request
+    resp, content = request(orig_request_method, uri, method, body,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/oauth2client/transport.py", line 280, in request
+    return http_callable(uri, method=method, body=body, headers=headers,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1724, in request
+    (response, content) = self._request(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1444, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1396, in _conn_request
+    response = conn.getresponse()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1322, in getresponse
+    response.begin()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 303, in begin
+    version, status, reason = self._read_status()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 264, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+2025-02-19 22:41:19,546 - INFO - Stop polling...
+2025-02-19 22:41:19,551 - WARNING - Goodbye!
+2025-02-19 22:41:22,142 - INFO - Запуск бота...
+2025-02-19 22:41:22,365 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:41:22,493 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:41:22,504 - INFO - Refreshing access_token
+2025-02-19 22:41:25,599 - INFO - Бот запущен!
+2025-02-19 22:41:28,265 - INFO - Start polling.
+2025-02-19 22:41:30,106 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-19 22:41:30,109 - INFO - Added job "send_schedule_cron" to job store "default"
+2025-02-19 22:41:30,109 - INFO - Scheduler started
+2025-02-19 22:41:30,109 - INFO - Запущен планировщик отправки расписания
+2025-02-19 22:42:02,212 - INFO - Stop polling...
+2025-02-19 22:42:02,220 - WARNING - Goodbye!
+2025-02-19 22:42:04,175 - INFO - Запуск бота...
+2025-02-19 22:42:04,407 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:42:04,535 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:42:04,541 - INFO - Refreshing access_token
+2025-02-19 22:42:07,761 - INFO - Бот запущен!
+2025-02-19 22:42:10,293 - INFO - Start polling.
+2025-02-19 22:42:13,524 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-19 22:42:13,526 - INFO - Added job "send_schedule_cron" to job store "default"
+2025-02-19 22:42:13,527 - INFO - Scheduler started
+2025-02-19 22:42:13,528 - INFO - Запущен планировщик отправки расписания
+2025-02-19 22:48:40,538 - INFO - Stop polling...
+2025-02-19 22:48:40,542 - WARNING - Goodbye!
+2025-02-19 22:49:44,324 - INFO - Запуск бота...
+2025-02-19 22:49:44,565 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:49:44,719 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:49:44,733 - INFO - Refreshing access_token
+2025-02-19 22:49:47,743 - INFO - Бот запущен!
+2025-02-19 22:49:50,476 - INFO - Start polling.
+2025-02-19 22:49:51,994 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:49:54,846 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-17' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=MessageToDeleteNotFound('Message to delete not found')>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 595, in callback
+    await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/bot.py", line 3300, in delete_message
+    return await self.request(api.Methods.DELETE_MESSAGE, payload)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/bot/api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/utils/exceptions.py", line 140, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.MessageToDeleteNotFound: Message to delete not found
+2025-02-19 22:49:56,622 - INFO - Команда /start от пользователя 984383301
+2025-02-19 22:49:56,722 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-19 22:50:01,304 - INFO - Пользователь 984383301 ввел класс 9А и расписание сохранено.
+2025-02-19 22:50:11,231 - INFO - Stop polling...
+2025-02-19 22:50:11,237 - WARNING - Goodbye!
+2025-02-19 22:51:08,472 - INFO - Запуск бота...
+2025-02-19 22:51:08,662 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:51:08,803 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:51:08,814 - INFO - Refreshing access_token
+2025-02-19 22:51:11,691 - INFO - Бот запущен!
+2025-02-19 22:51:14,498 - INFO - Start polling.
+2025-02-19 22:51:30,150 - INFO - Stop polling...
+2025-02-19 22:51:30,154 - WARNING - Goodbye!
+2025-02-19 22:51:32,072 - INFO - Запуск бота...
+2025-02-19 22:51:32,291 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:51:32,411 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:51:32,417 - INFO - Refreshing access_token
+2025-02-19 22:51:34,524 - WARNING - Goodbye!
+2025-02-19 22:51:36,216 - INFO - Запуск бота...
+2025-02-19 22:51:36,400 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:51:36,532 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:51:36,537 - INFO - Refreshing access_token
+2025-02-19 22:51:39,509 - INFO - Бот запущен!
+2025-02-19 22:51:42,087 - INFO - Start polling.
+2025-02-19 22:51:52,555 - INFO - Stop polling...
+2025-02-19 22:51:52,561 - WARNING - Goodbye!
+2025-02-19 22:51:54,531 - INFO - Запуск бота...
+2025-02-19 22:51:54,719 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:51:54,838 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:51:54,843 - INFO - Refreshing access_token
+2025-02-19 22:51:57,960 - INFO - Бот запущен!
+2025-02-19 22:52:00,765 - INFO - Start polling.
+2025-02-19 22:55:42,862 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-4' coro=<update_data() done, defined at main.py:152> exception=TimeoutError(60, 'Operation timed out')>
+Traceback (most recent call last):
+  File "main.py", line 158, in update_data
+    current_schedule_data = await sheets.read_from_sheets(
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/sheets.py", line 24, in read_from_sheets
+    values = service.spreadsheets().values().get(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 923, in execute
+    resp, content = _retry_request(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 222, in _retry_request
+    raise exception
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/oauth2client/transport.py", line 173, in new_request
+    resp, content = request(orig_request_method, uri, method, body,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/oauth2client/transport.py", line 280, in request
+    return http_callable(uri, method=method, body=body, headers=headers,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1724, in request
+    (response, content) = self._request(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1444, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1396, in _conn_request
+    response = conn.getresponse()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1322, in getresponse
+    response.begin()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 303, in begin
+    version, status, reason = self._read_status()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 264, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+2025-02-19 22:56:20,075 - INFO - Stop polling...
+2025-02-19 22:56:20,080 - WARNING - Goodbye!
+2025-02-19 22:57:12,786 - INFO - Запуск бота...
+2025-02-19 22:57:13,519 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:57:13,659 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:57:13,674 - INFO - Refreshing access_token
+2025-02-19 22:57:17,274 - INFO - Бот запущен!
+2025-02-19 22:57:19,937 - INFO - Start polling.
+2025-02-19 22:57:24,667 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-13' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=TypeError("object list can't be used in 'await' expression")>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 289, in proccess_select_class
+    await push_message_to_all_users(message_text, message)
+  File "main.py", line 277, in push_message_to_all_users
+    users_ids = await get_all_users()
+TypeError: object list can't be used in 'await' expression
+2025-02-19 22:57:34,299 - INFO - Stop polling...
+2025-02-19 22:57:34,303 - WARNING - Goodbye!
+2025-02-19 22:57:36,156 - INFO - Запуск бота...
+2025-02-19 22:57:37,361 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:57:37,499 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:57:37,507 - INFO - Refreshing access_token
+2025-02-19 22:57:41,090 - INFO - Бот запущен!
+2025-02-19 22:57:43,655 - INFO - Start polling.
+2025-02-19 22:58:17,553 - INFO - Stop polling...
+2025-02-19 22:58:17,556 - WARNING - Goodbye!
+2025-02-19 22:58:19,671 - INFO - Запуск бота...
+2025-02-19 22:58:19,875 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 22:58:19,994 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 22:58:20,000 - INFO - Refreshing access_token
+2025-02-19 22:58:23,917 - INFO - Бот запущен!
+2025-02-19 22:58:28,574 - INFO - Start polling.
+2025-02-19 22:58:43,236 - INFO - Stop polling...
+2025-02-19 22:58:43,241 - WARNING - Goodbye!
+2025-02-19 23:00:02,682 - INFO - Запуск бота...
+2025-02-19 23:00:02,875 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:00:02,991 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:00:03,003 - INFO - Refreshing access_token
+2025-02-19 23:00:06,942 - INFO - Бот запущен!
+2025-02-19 23:00:09,217 - INFO - Start polling.
+2025-02-19 23:00:09,352 - INFO - Команда /start от пользователя 984383301
+2025-02-19 23:00:09,359 - INFO - Пользователь @montaanaq добавлен в базу данных!
+2025-02-19 23:00:09,472 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-19 23:00:13,128 - INFO - Пользователь 984383301 ввел класс 9А и расписание сохранено.
+2025-02-19 23:00:19,918 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=TypeError('push_message_to_all_users() takes 1 positional argument but 2 were given')>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 291, in proccess_select_class
+    await push_message_to_all_users(message_text, message)
+TypeError: push_message_to_all_users() takes 1 positional argument but 2 were given
+2025-02-19 23:00:31,214 - INFO - Stop polling...
+2025-02-19 23:00:31,218 - WARNING - Goodbye!
+2025-02-19 23:00:32,959 - INFO - Запуск бота...
+2025-02-19 23:00:34,535 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:00:34,681 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:00:34,691 - INFO - Refreshing access_token
+2025-02-19 23:00:43,737 - INFO - Бот запущен!
+2025-02-19 23:00:49,226 - INFO - Start polling.
+2025-02-19 23:07:31,845 - INFO - Stop polling...
+2025-02-19 23:07:31,849 - WARNING - Goodbye!
+2025-02-19 23:07:31,894 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-4' coro=<update_data() done, defined at main.py:152> exception=KeyboardInterrupt()>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/utils/executor.py", line 323, in start_polling
+    loop.run_forever()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/asyncio/base_events.py", line 563, in run_forever
+    self._run_once()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/asyncio/base_events.py", line 1844, in _run_once
+    handle._run()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/asyncio/events.py", line 81, in _run
+    self._context.run(self._callback, *self._args)
+  File "main.py", line 158, in update_data
+    current_schedule_data = await sheets.read_from_sheets(
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/sheets.py", line 24, in read_from_sheets
+    values = service.spreadsheets().values().get(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 923, in execute
+    resp, content = _retry_request(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/googleapiclient/http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/oauth2client/transport.py", line 173, in new_request
+    resp, content = request(orig_request_method, uri, method, body,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/oauth2client/transport.py", line 280, in request
+    return http_callable(uri, method=method, body=body, headers=headers,
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1724, in request
+    (response, content) = self._request(
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1444, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/httplib2/__init__.py", line 1396, in _conn_request
+    response = conn.getresponse()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1322, in getresponse
+    response.begin()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 303, in begin
+    version, status, reason = self._read_status()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 264, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+KeyboardInterrupt
+2025-02-19 23:07:34,443 - INFO - Запуск бота...
+2025-02-19 23:07:35,221 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:07:35,355 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:07:35,368 - INFO - Refreshing access_token
+2025-02-19 23:07:38,723 - INFO - Бот запущен!
+2025-02-19 23:07:41,295 - INFO - Start polling.
+2025-02-19 23:07:47,973 - INFO - Рассылка завершена: 1 успешно, 0 с ошибками.
+2025-02-19 23:08:37,637 - INFO - Stop polling...
+2025-02-19 23:08:37,639 - WARNING - Goodbye!
+2025-02-19 23:08:39,495 - INFO - Запуск бота...
+2025-02-19 23:08:39,933 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:08:40,081 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:08:40,095 - INFO - Refreshing access_token
+2025-02-19 23:08:43,331 - INFO - Бот запущен!
+2025-02-19 23:08:45,477 - INFO - Start polling.
+2025-02-19 23:08:45,671 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-8' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=TypeError("int() argument must be a string, a bytes-like object or a number, not 'NoneType'")>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 271, in push_to_users
+    if message.chat.id == int(ADMIN_ID):
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2025-02-19 23:09:03,075 - INFO - Stop polling...
+2025-02-19 23:09:03,079 - WARNING - Goodbye!
+2025-02-19 23:09:04,949 - INFO - Запуск бота...
+2025-02-19 23:09:05,328 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:09:05,473 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:09:05,479 - INFO - Refreshing access_token
+2025-02-19 23:09:08,143 - INFO - Бот запущен!
+2025-02-19 23:09:10,472 - INFO - Start polling.
+2025-02-19 23:09:10,675 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-8' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=ValueError("invalid literal for int() with base 10: ''")>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 271, in push_to_users
+    if message.chat.id == int(ADMIN_ID):
+ValueError: invalid literal for int() with base 10: ''
+2025-02-19 23:09:57,870 - INFO - Stop polling...
+2025-02-19 23:09:57,872 - WARNING - Goodbye!
+2025-02-19 23:10:20,990 - INFO - Запуск бота...
+2025-02-19 23:10:21,337 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:10:21,473 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:10:21,486 - INFO - Refreshing access_token
+2025-02-19 23:10:24,434 - INFO - Бот запущен!
+2025-02-19 23:10:26,970 - INFO - Start polling.
+2025-02-19 23:10:33,438 - INFO - Stop polling...
+2025-02-19 23:10:33,440 - WARNING - Goodbye!
+2025-02-19 23:10:35,268 - INFO - Запуск бота...
+2025-02-19 23:10:36,199 - INFO - Bot: Бот расписаний занятий Гимназии №33 [@gymn33_bot]
+2025-02-19 23:10:36,317 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:10:36,323 - INFO - Refreshing access_token
+2025-02-19 23:10:44,733 - INFO - Бот запущен!
+2025-02-19 23:10:47,506 - INFO - Start polling.
+2025-02-19 23:10:56,191 - INFO - Рассылка завершена: 1 успешно, 0 с ошибками.
+2025-02-19 23:11:44,263 - INFO - Stop polling...
+2025-02-19 23:11:44,273 - WARNING - Goodbye!
+2025-02-19 23:21:15,603 - INFO - Scheduler started
+2025-02-19 23:21:21,968 - INFO - Scheduler started
+2025-02-19 23:21:23,339 - INFO - Scheduler started
+2025-02-19 23:21:27,710 - INFO - Scheduler started
+2025-02-19 23:21:28,670 - INFO - Webhook установлен на https://6f06-95-26-82-58.ngrok-free.app/webhook
+2025-02-19 23:21:33,829 - INFO - Scheduler has been shut down
+2025-02-19 23:21:34,639 - INFO - Scheduler started
+2025-02-19 23:21:34,756 - INFO - Attempting refresh to obtain initial access_token
+2025-02-19 23:21:34,770 - INFO - Refreshing access_token
+2025-02-19 23:21:40,135 - INFO - Бот запущен!
+2025-02-19 23:21:43,592 - INFO - Scheduler has been shut down

@@ -40,6 +40,7 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 WEBHOOK_PATH = "/webhook"
 PORT = int(os.getenv('PORT', 8000))
+ADMIN_ID = os.getenv('ADMIN_ID', None)
 
 storage = MemoryStorage()
 bot = Bot(token=BOT_TOKEN)
@@ -118,6 +119,7 @@ async def telegram_webhook(request: Request):
 async def lifespan(app: FastAPI):
     scheduler = AsyncIOScheduler()
     scheduler.start()
+    await on_startup()
     webhook_info = await bot.get_webhook_info()
     if webhook_info.url != WEBHOOK_URL:
         await bot.set_webhook(url=WEBHOOK_URL)
@@ -246,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup(_):
+async def on_startup():
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
@@ -265,6 +267,69 @@ async def add_user_to_db(id: int, username: str):
         logger.info(f'Пользователь {username} добавлен в базу данных!')
 
 
+@dp.message_handler(commands=["push"])
+async def push_to_users(message: types.Message):
+    if ADMIN_ID is not None:
+        if message.chat.id == int(ADMIN_ID):
+            keyboard = types.InlineKeyboardMarkup().add(
+                types.InlineKeyboardButton(
+                    'Отправить сообщение', callback_data='send_push_message')
+            )
+            await message.answer('Выберите действие:', reply_markup=keyboard)
+        else:
+            await message.answer('Я тебя не понимаю... Используй /help')
+    else:
+        await message.answer('Я тебя не понимаю... Используй /help')
+
+
+@dp.callback_query_handler(lambda c: c.data == 'send_push_message')
+async def handle_push_callback(callback_query: types.CallbackQuery):
+    """Handles the 'Отправить сообщение' button."""
+    await callback_query.answer()  # Closes the loading animation on the button
+    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:')
+    await PushMessage.push_message.set()
+
+
+async def push_message_to_all_users(message_text: str):
+    users = get_all_users()
+    if not users:
+        logger.warning("Нет пользователей для отправки сообщения.")
+        return
+
+    success_count, error_count = 0, 0
+
+    for user in users:
+        user_id = int(user[0])
+        try:
+            await bot.send_message(chat_id=user_id, text=message_text)
+            success_count += 1
+        except Exception as e:
+            logger.error(
+                f"Не удалось отправить сообщение пользователю {user_id}: {e}")
+            error_count += 1
+            continue
+
+    logger.info(
+        f"Рассылка завершена: {success_count} успешно, {error_count} с ошибками.")
+
+
+class PushMessage(StatesGroup):
+    push_message = State()
+
+
+@dp.message_handler(state=PushMessage.push_message)
+async def process_push_message(message: types.Message, state: FSMContext):
+    message_text = message.text.strip()
+
+    if not message_text:
+        await message.answer('Сообщение не может быть пустым. Попробуйте снова.')
+        return
+
+    await push_message_to_all_users(message_text)
+    await message.answer(f'✅ Сообщение успешно отправлено всем пользователям.')
+    await state.finish()
+
+
 @dp.message_handler(commands=["start"])
 async def start_command(message: types.Message):
     logger.info(f'Команда /start от пользователя {message.chat.id}')
@@ -278,6 +343,14 @@ async def start_command(message: types.Message):
         await select_class(message)
     else:
         await bot.send_message(chat_id=message.chat.id, text='Ты уже зарегистрирован! Для сброса регистрации используй <b>/unregister</b>', parse_mode='html')
+
+
+async def select_class(message: types.Message):
+    global class_id
+    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате: <b>11Т</b>\nТеперь напиши свой класс: ", parse_mode='html')
+    await Class_id.wait_for_class.set()
+    logger.info(
+        f'Ожидание ввода класса от пользователя {message.chat.id}')
 
 
 class Class_id(StatesGroup):
@@ -307,23 +380,19 @@ async def proccess_select_class(message: types.Message, state: FSMContext):
 class_id = None  # Инициализируем переменную для хранения объекта сообщения
 
 
-async def select_class(message: types.Message):
-    global class_id
-    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате: <b>11Т</b>\nТеперь напиши свой класс: ", parse_mode='html')
-    await Class_id.wait_for_class.set()
-    logger.info(
-        f'Ожидание ввода класса от пользователя {message.chat.id}')
-
-
 async def complete_class(message: types.Message):
     global class_id, classes
-    if (isinstance(message.text, str) and 2 <= len(message.text) <= 3 and message.text.upper() in classes):
+    if isinstance(message.text, str) and 2 <= len(message.text) <= 3 and message.text.upper() in classes:
         await set_class(message.chat.id, message.text.upper())
 
-        # Удаляем сообщение с запросом класса
-        await bot.delete_message(chat_id=message.chat.id, message_id=class_id.message_id)
+        # Редактируем сообщение с запросом класса, а не удаляем его
+        await bot.edit_message_text(
+            chat_id=message.chat.id,
+            message_id=class_id.message_id,
+            text=f'✅ Успешно! Ваш класс: <b>{message.text.upper()}</b>',
+            parse_mode='html'
+        )
 
-        await bot.send_message(chat_id=message.chat.id, text=f'✅ Успешно! Ваш класс: <b>{message.text.upper()}</b>', parse_mode='html')
         await asyncio.sleep(0.3)
         await start_schedule(message)
     else:
@@ -424,7 +493,7 @@ async def func(message: types.Message):
         '/start'
     ]
 
-    async def get_schedule_for_day(user_id, day, msg):
+    async def get_schedule_for_day(user_id: int, day: str, msg: str):
         # Проверяем, если запрашивается полное расписание
         global user_schedule, teachers
         if day == 'full':
@@ -491,15 +560,16 @@ async def func(message: types.Message):
         markup.row(kb.changes_in_schedule)
         markup.row(kb.unregister)
         await bot.send_message(chat_id=message.from_user.id, text='Профиль', reply_markup=markup)
+
     if (message.text == 'Учителя'):
         await bot.send_message(chat_id=message.chat.id, text=teachers, parse_mode='html')
 
     if (message.text == 'Оповещения'):
-        await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
         if message.from_user.id == message.chat.id:
-            await bot.send_message(chat_id=message.chat.id,
-                                   text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
-                                   reply_markup=kb.notify_keyboard)
+            await bot.edit_message_text(chat_id=message.chat.id,
+                                        message_id=message.message_id,
+                                        text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
+                                        reply_markup=kb.notify_keyboard)
         else:
             await bot.send_message(chat_id=message.chat.id, text="Данная функция работает только в личных сообщениях!")
 
@@ -568,10 +638,8 @@ async def callback(call: types.CallbackQuery) -> None:
 
     # profile
     if call.data == 'donate':
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await donate(call.message)
     elif call.data == 'changes_in_schedule':
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await changes_in_schedule(call.message)
     elif call.data == 'unreg':
         await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
@@ -580,9 +648,8 @@ async def callback(call: types.CallbackQuery) -> None:
 
     # days
     if call.data in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']:
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         message_text = await msg.return_schedule(get_user_schedule(call.message.chat.id), call.data)
-        await bot.send_message(chat_id=call.message.chat.id, text=message_text, parse_mode='html', reply_markup=kb.days)
+        await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=message_text, parse_mode='html', reply_markup=kb.days)
     # notifications
 
     if call.data == 'unreg':
@@ -590,12 +657,7 @@ async def callback(call: types.CallbackQuery) -> None:
         await proccess_unregister(call.from_user.id)
         await bot.send_message(chat_id=call.message.chat.id, text='<b>Вы успешно сбросили регистрацию!</b>\n\n<i>/start</i> - для начала работы бота', parse_mode='html', reply_markup=types.ReplyKeyboardRemove())
 
-    if call.data == 'register':
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
-        await start_command(call.message)
-
     elif call.data == 'notify':
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         if call.from_user.id == call.message.chat.id:
             await bot.send_message(chat_id=call.message.chat.id,
                                    text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
@@ -604,14 +666,12 @@ async def callback(call: types.CallbackQuery) -> None:
             await bot.send_message(chat_id=call.message.chat.id, text="Данная функция работает только в личных сообщениях!")
     elif call.data == 'on_notifications':
         await notify_db(call.from_user.id, 1)
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await start_scheduler()
         await on_notify(call.message)
     elif call.data == 'off_notifications':
         await notify_db(call.from_user.id, 0)
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await off_notify(call.message)
 
 if __name__ == '__main__':
-    logger.info("Запуск бота...")
-    executor.start_polling(dp, skip_updates=False, on_startup=on_startup)
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)

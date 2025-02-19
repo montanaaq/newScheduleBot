@@ -47,10 +47,6 @@ notify_keyboard = InlineKeyboardMarkup(resize_keyboard=True, row_width=1)
 notify_keyboard.add(on)
 notify_keyboard.add(off)
 
-register = InlineKeyboardMarkup(resize_keyboard=True, row_width=1).row(
-    InlineKeyboardButton('Зарегистрироваться', callback_data='register')
-)
-
 weekdays = InlineKeyboardMarkup(resize_keyboard=True, row_width=2).add(
     InlineKeyboardButton('Понедельник', callback_data='edit_monday'),
     InlineKeyboardButton('Вторник', callback_data='edit_tuesday'),
