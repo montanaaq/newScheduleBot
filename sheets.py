@@ -1,6 +1,5 @@
 import hashlib
-import time
-from pprint import pprint
+from typing import Dict, List, Tuple
 
 import apiclient.discovery  # type: ignore
 import httplib2
@@ -99,32 +98,52 @@ async def get_schedule_start():
     return schedule
 
 
-async def get_teachers_from_sheets():
-    teacher_data = await read_from_sheets('Учителя!A:B', 'ROWS')
-    return teacher_data
+async def get_teachers_from_sheets() -> Tuple[bool, List[Dict[str, str]]]:
+    """Получает данные учителей из Google Sheets с обработкой ошибок"""
+    try:
+        teacher_data = await read_from_sheets('Учителя!A:B', 'ROWS')
+        if not teacher_data.get('values'):
+            return False, []
+
+        # Валидация и нормализация данных
+        validated_data = []
+        for row in teacher_data['values']:
+            if len(row) >= 2 and row[0] and row[1]:
+                validated_data.append({
+                    'subject': row[0].strip(),
+                    'name': row[1].strip()
+                })
+        return True, validated_data
+
+    except Exception as e:
+        return False, []
 
 
-async def format_teachers_list():
-    """Читает список учителей из Google Sheets."""
-    teacher_data = await get_teachers_from_sheets()
-    if 'values' not in teacher_data:
-        return "❌ Список учителей не найден."
+async def format_teachers_list(teachers: List[Dict[str, str]]) -> str:
+    """Форматирует список учителей в HTML-текст"""
+    if not teachers:
+        return "❌ Список учителей временно недоступен"
 
-    teachers_list = '👨‍🏫 <b>Список учителей:</b>\n'
-    teachers_list += '—' * 20 + '\n'
+    header = "🏫 <b>Список учителей:</b>\n" + "—" * 20 + "\n"
 
-    for row in teacher_data['values']:
-        if len(row) < 2:
-            continue
-        subject, teacher_name = row
-        teachers_list += f"👨‍🏫 <b>{subject}</b>\n<code>{teacher_name}</code>\n"
-        teachers_list += '—' * 20 + '\n'
+    teacher_entries = []
+    for teacher in teachers:
+        entry = (
+            f"👨‍🏫<b>{teacher['subject']}</b>\n"
+            f"<code>{teacher['name']}</code>\n"
+            "—" * 20
+        )
+        teacher_entries.append(entry)
 
-    return teachers_list
+    return header + "\n".join(teacher_entries)
 
-# Пример использования
+
+async def get_formatted_teachers() -> str:
+    """Основная точка входа для получения форматированного списка"""
+    success, teachers_data = await get_teachers_from_sheets()
+    return await format_teachers_list(teachers_data) if success else "❌ Не удалось загрузить данные"
+
 if __name__ == "__main__":
     import asyncio
 
-    # Инициализируем и начинаем проверку изменений
-    asyncio.run(get_schedule_start())  # Сначала получаем начальное расписание
+    asyncio.run(get_schedule_start())

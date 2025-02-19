@@ -10,7 +10,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from aiogram.utils import executor
+from aiogram.utils.callback_data import CallbackData
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
@@ -538,6 +538,7 @@ async def func(message: types.Message):
         today = datetime.now().weekday()
         # Преобразуем в строку
         await get_schedule_for_day(message.chat.id, str(today), msg)
+
     if (message.text == 'Донат'):
         markup = types.InlineKeyboardMarkup()
         donatee = types.InlineKeyboardButton('Отправить донат',
@@ -561,8 +562,77 @@ async def func(message: types.Message):
         markup.row(kb.unregister)
         await bot.send_message(chat_id=message.from_user.id, text='Профиль', reply_markup=markup)
 
+    pagination_cb = CallbackData('nav', 'action', 'page')
+
+    # Добавить эти функции в основной код (не внутри обработчиков)
+    async def get_teachers_paginated(page: int = 0, per_page: int = 10):
+        """Возвращает страницу с учителями и общее количество страниц"""
+        teacher_data = await sheets.get_teachers_from_sheets()
+        if 'values' not in teacher_data:
+            return None, 0
+        
+        teachers = [row for row in teacher_data['values'] if len(row) >= 2]
+        total = len(teachers)
+        pages = (total + per_page - 1) // per_page
+        start = page * per_page
+        end = start + per_page
+        
+        return teachers[start:end], pages
+
+    async def format_teachers_page(page: int = 0):
+        """Форматирует страницу с учителями"""
+        teachers, total_pages = await get_teachers_paginated(page)
+        if not teachers:
+            return "❌ Список учителей не найден.", None
+        
+        message_text = '👨‍🏫 <b>Список учителей:</b>\n'
+        message_text += '—' * 20 + '\n'
+        
+        for idx, row in enumerate(teachers, start=1):
+            subject, teacher_name = row
+            message_text += f"👨‍🏫 <b>{subject}</b>\n<code>{teacher_name}</code>\n"
+            message_text += '—' * 20 + '\n'
+        
+        message_text += f"\nСтраница {page + 1} из {total_pages}"
+        
+        keyboard = types.InlineKeyboardMarkup()
+        if page > 0:
+            keyboard.add(
+                types.InlineKeyboardButton(
+                    "⬅ Назад", 
+                    callback_data=pagination_cb.new(action="prev", page=page)
+                )
+            )
+        if page < total_pages - 1:
+            keyboard.add(
+                types.InlineKeyboardButton(
+                    "Вперед ➡", 
+                    callback_data=pagination_cb.new(action="next", page=page)
+                )
+            )
+        
+        return message_text, keyboard
+
+    # Добавить обработчик пагинации (вместо текущего @dp.callback_query_handler())
+    @dp.callback_query_handler(pagination_cb.filter(action=['prev', 'next']))
+    async def pagination_handler(call: types.CallbackQuery, callback_data: dict):
+        """Обработчик нажатий на кнопки пагинации"""
+        action = callback_data['action']
+        current_page = int(callback_data['page'])
+        
+        if action == 'prev':
+            new_page = max(current_page - 1, 0)
+        elif action == 'next':
+            new_page = current_page + 1
+        
+        text, keyboard = await format_teachers_page(new_page)
+        await call.message.edit_text(text, parse_mode='HTML', reply_markup=keyboard)
+        await call.answer()
+
+    # Изменить блок обработки команды "Учителя":
     if (message.text == 'Учителя'):
-        await bot.send_message(chat_id=message.chat.id, text=teachers, parse_mode='html')
+        teachers_text, keyboard = await format_teachers_page()
+        await bot.send_message(chat_id=message.chat.id, text=teachers_text, parse_mode='HTML', reply_markup=keyboard)
 
     if (message.text == 'Оповещения'):
         if message.from_user.id == message.chat.id:

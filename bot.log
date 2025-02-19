@@ -5205,3 +5205,9 @@ ValueError: invalid literal for int() with base 10: ''
 2025-02-19 23:21:34,770 - INFO - Refreshing access_token
 2025-02-19 23:21:40,135 - INFO - Бот запущен!
 2025-02-19 23:21:43,592 - INFO - Scheduler has been shut down
+2025-02-20 01:34:31,713 - INFO - Scheduler started
+2025-02-20 01:34:31,834 - INFO - Attempting refresh to obtain initial access_token
+2025-02-20 01:34:31,847 - INFO - Refreshing access_token
+2025-02-20 01:34:34,418 - INFO - Бот запущен!
+2025-02-20 01:34:36,558 - INFO - Webhook установлен на https://6f06-95-26-82-58.ngrok-free.app/webhook
+2025-02-20 01:34:59,760 - INFO - Scheduler has been shut down
