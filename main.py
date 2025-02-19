@@ -566,8 +566,7 @@ async def func(message: types.Message):
 
     if (message.text == 'Оповещения'):
         if message.from_user.id == message.chat.id:
-            await bot.edit_message_text(chat_id=message.chat.id,
-                                        message_id=message.message_id,
+            await bot.send_message(chat_id=message.chat.id,
                                         text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
                                         reply_markup=kb.notify_keyboard)
         else:
@@ -651,11 +650,6 @@ async def callback(call: types.CallbackQuery) -> None:
         message_text = await msg.return_schedule(get_user_schedule(call.message.chat.id), call.data)
         await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=message_text, parse_mode='html', reply_markup=kb.days)
     # notifications
-
-    if call.data == 'unreg':
-        await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
-        await proccess_unregister(call.from_user.id)
-        await bot.send_message(chat_id=call.message.chat.id, text='<b>Вы успешно сбросили регистрацию!</b>\n\n<i>/start</i> - для начала работы бота', parse_mode='html', reply_markup=types.ReplyKeyboardRemove())
 
     elif call.data == 'notify':
         if call.from_user.id == call.message.chat.id:
