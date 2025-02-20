@@ -248,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup(_):
+async def on_startup():
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
@@ -725,9 +725,12 @@ async def callback(call: types.CallbackQuery) -> None:
     # profile
     if call.data == 'donate':
         await donate(call.message)
+        await call.answer()
     elif call.data == 'changes_in_schedule':
         await changes_in_schedule(call.message)
+        await call.answer()
     elif call.data == 'unreg':
+        await call.answer()
         await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
         await proccess_unregister(call.from_user.id)
         await bot.send_message(chat_id=call.message.chat.id, text='<b>Вы успешно сбросили регистрацию!</b>\n\n<b>/start</b> - для начала работы бота', parse_mode='html', reply_markup=types.ReplyKeyboardRemove())
@@ -750,13 +753,15 @@ async def callback(call: types.CallbackQuery) -> None:
         await notify_db(call.from_user.id, 1)
         await start_scheduler()
         await on_notify(call.message)
+        await call.answer()
     elif call.data == 'off_notifications':
         await notify_db(call.from_user.id, 0)
         await off_notify(call.message)
+        await call.answer()
 
 if __name__ == '__main__':
-    # import uvicorn
-    # uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
-    from aiogram.utils import executor
-    executor.start_polling(
-        dispatcher=dp, on_startup=on_startup, skip_updates=False)
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
+    # from aiogram.utils import executor
+    # executor.start_polling(
+    #     dispatcher=dp, on_startup=on_startup, skip_updates=False)

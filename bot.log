@@ -5415,3 +5415,18 @@ AttributeError: type object 'ReportMessage' has no attribute 'push_message'
 2025-02-20 10:32:55,096 - INFO - Start polling.
 2025-02-20 10:32:55,932 - INFO - Stop polling...
 2025-02-20 10:32:55,933 - WARNING - Goodbye!
+2025-02-20 10:43:45,107 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-20 10:43:45,290 - INFO - Attempting refresh to obtain initial access_token
+2025-02-20 10:43:45,305 - INFO - Refreshing access_token
+2025-02-20 10:43:54,649 - INFO - Бот запущен!
+2025-02-20 10:43:58,925 - INFO - Start polling.
+2025-02-20 10:44:18,817 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-20 10:44:18,820 - INFO - Added job "send_schedule_cron" to job store "default"
+2025-02-20 10:44:18,820 - INFO - Scheduler started
+2025-02-20 10:44:18,820 - INFO - Запущен планировщик отправки расписания
+2025-02-20 10:44:34,406 - INFO - Stop polling...
+2025-02-20 10:44:34,410 - WARNING - Goodbye!
+2025-02-20 10:44:38,745 - INFO - Scheduler started
+2025-02-20 10:44:38,889 - INFO - Attempting refresh to obtain initial access_token
+2025-02-20 10:44:38,903 - INFO - Refreshing access_token
+2025-02-20 10:44:44,273 - INFO - Бот запущен!
