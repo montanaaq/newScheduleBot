@@ -1,3 +1,4 @@
+import time
 import asyncio
 import json
 import logging
@@ -475,7 +476,6 @@ async def report_bug(message: types.Message):
     await bot.send_message(chat_id=message.from_user.id,
                            text='Если вы нашли несовпадение в расписании или списке учителей, нажмите на кнопку ниже, для связи с разработчиком.', reply_markup=markup)
 
-import time
 
 last_report_time = {}
 
@@ -501,35 +501,34 @@ async def handle_report_callback(callback_query: types.CallbackQuery):
     await ReportMessage.report_message.set()
 
 
+async def send_to_admin(message_text: str, username: str):
+    username = username if username else 'Без имени пользователя'
+    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от {username} \n\nСообщение: {message_text}')
+
+
 @dp.message_handler(state=ReportMessage.report_message)
 async def process_report_message(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
+    username = message.from_user.username if message.from_user.username else f'ID: {user_id}'
     message_text = message.text.strip()
 
     if not message_text:
         await message.answer('Сообщение не может быть пустым. Попробуйте снова.')
         return
 
-    # Отправка сообщения администратору
-    await send_to_admin(message_text, message.from_user.username)
-    last_report_time[user_id] = time.time()  
-    await message.answer(f'✅ Сообщение успешно отправлено разработчику.')
+    await send_to_admin(message_text, username)
+    last_report_time[user_id] = time.time()
+    await message.answer('✅ Сообщение успешно отправлено разработчику.')
     await state.finish()
-
-
-async def send_to_admin(message_text: str, username: str):
-    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от @{username} \n\nСообщение: {message_text}')
 
 
 @dp.message_handler(content_types=['text'])
 async def func(message: types.Message):
-    class_id = users_cursor.execute('SELECT class_id FROM users WHERE tg_id = "{id}"'.format(
-        id=message.chat.id)).fetchone()[0]
-    users_unregister = [row[0] for row in users_cursor.execute(
-        'SELECT tg_id FROM users WHERE class_id = 0').fetchall()]
-    users_id = [row[0]
-                for row in users_cursor.execute('SELECT tg_id FROM users').fetchall()]
+    user_data = users_cursor.execute(
+        'SELECT class_id FROM users WHERE tg_id = ?', (message.chat.id,)
+    ).fetchone()
 
+    class_id = user_data[0] if user_data else None
     formatted_messages = [
         'На завтра',
         'На сегодня',
@@ -545,87 +544,102 @@ async def func(message: types.Message):
         '/start'
     ]
 
+    if class_id is None or class_id == 0:
+        if message.text not in formatted_messages:
+            await bot.send_message(
+                chat_id=message.chat.id,
+                text='Мы не нашли вас в базе данных. Попробуйте <b>/start</b> и повторите попытку! '
+                     'Пожалуйста, укажите класс в формате: <b>11Т</b>',
+                parse_mode='html'
+            )
+        return
+
+    users_unregister = [row[0] for row in users_cursor.execute(
+        'SELECT tg_id FROM users WHERE class_id = 0').fetchall()]
+    users_id = [row[0] for row in users_cursor.execute(
+        'SELECT tg_id FROM users').fetchall()]
+
     async def get_schedule_for_day(user_id: int, day: str, msg: str):
-        # Проверяем, если запрашивается полное расписание
         global user_schedule, teachers
         if day == 'full':
-            # Получаем расписание пользователя
-            # Запрашиваем полное расписание
             response = await msg.return_schedule(get_user_schedule(message.chat.id), 'full')
             await bot.send_message(chat_id=user_id, text=response, parse_mode='html')
             return
 
-        # Проверяем, есть ли запрашиваемый день в day_mapping
         day_mapping = {
-            "0": 'monday',  # Понедельник
-            "1": 'tuesday',  # Вторник
-            "2": 'wednesday',  # Среда
-            "3": 'thursday',  # Четверг
-            "4": 'friday',  # Пятница
-            "5": 'saturday',  # Суббота
-            "6": 'sunday'   # Воскресенье
+            "0": 'monday',
+            "1": 'tuesday',
+            "2": 'wednesday',
+            "3": 'thursday',
+            "4": 'friday',
+            "5": 'saturday',
+            "6": 'sunday'
         }
 
         if day in day_mapping:
-            # Получаем расписание пользователя
-            requested_day = day_mapping[day]  # Используем цифры от 0 до 6
-            # Запрашиваем расписание на конкретный день
+            requested_day = day_mapping[day]
             response = await msg.return_schedule(get_user_schedule(message.chat.id), requested_day)
             await bot.send_message(chat_id=user_id, text=response, parse_mode='html')
         else:
-            await bot.send_message(chat_id=user_id, text='Неверный день недели!')
+            await bot.send_message(chat_id=user_id, text='❌ Неверный день недели!')
 
+    # Обработка команд
     if message.text == 'По дням':
-        await bot.send_message(chat_id=message.chat.id, text='Здесь вы можете выбрать расписание по дням', reply_markup=kb.days)
+        await bot.send_message(chat_id=message.chat.id, text='Выберите день недели:', reply_markup=kb.days)
 
-    if message.text == 'Полностью':
-        await bot.send_message(chat_id=message.chat.id, text=(await msg.return_schedule(get_user_schedule(message.chat.id), 'full')), parse_mode='html')
+    elif message.text == 'Полностью':
+        await bot.send_message(
+            chat_id=message.chat.id,
+            text=(await msg.return_schedule(get_user_schedule(message.chat.id), 'full')),
+            parse_mode='html'
+        )
 
-    if message.text == 'На завтра':
+    elif message.text == 'На завтра':
         tomorrow = (datetime.now().weekday() + 1) % 7
-        # Преобразуем в строку
         await get_schedule_for_day(message.chat.id, str(tomorrow), msg)
 
-    if message.text == 'На сегодня':
+    elif message.text == 'На сегодня':
         today = datetime.now().weekday()
-        # Преобразуем в строку
         await get_schedule_for_day(message.chat.id, str(today), msg)
 
-    if (message.text == 'Донат'):
-        markup = types.InlineKeyboardMarkup().add(types.InlineKeyboardButton('Отправить донат',
-                                                                             url='https://www.tinkoff.ru/rm/r_vpHWsJeqjz.TmlPkWbvLU/5Dvvy70865'))
-        await bot.send_message(chat_id=message.from_user.id,
-                               text='Если вам нравится работа бота и вы хотите поддержать разработчика материально, можете отправить донат по кнопке ниже :)', reply_markup=markup)
+    elif message.text == 'Донат':
+        markup = types.InlineKeyboardMarkup().add(
+            types.InlineKeyboardButton(
+                'Отправить донат', url='https://www.tinkoff.ru/rm/r_vpHWsJeqjz.TmlPkWbvLU/5Dvvy70865')
+        )
+        await bot.send_message(
+            chat_id=message.from_user.id,
+            text='💰 Если вам нравится работа бота и вы хотите поддержать разработчика, нажмите на кнопку ниже:',
+            reply_markup=markup
+        )
 
-    if (message.text == 'Обратная связь'):
+    elif message.text == 'Обратная связь':
         await report_bug(message)
 
-    if (message.text == 'Профиль'):
+    elif message.text == 'Профиль':
         markup = types.InlineKeyboardMarkup(resize_keyboard=True)
         markup.row(kb.donate)
         markup.row(kb.notify)
         markup.row(kb.changes_in_schedule)
         markup.row(kb.unregister)
-        await bot.send_message(chat_id=message.from_user.id, text='Профиль', reply_markup=markup)
+        await bot.send_message(chat_id=message.from_user.id, text='📄 Ваш профиль:', reply_markup=markup)
 
-    if (message.text == 'Оповещения'):
-        if message.from_user.id == message.chat.id:
-            await bot.send_message(chat_id=message.chat.id,
-                                   text='Чтобы включить или выключить оповещения от бота, нажмите на кнопки ниже.',
-                                   reply_markup=kb.notify_keyboard)
+    elif message.text == 'Оповещения':
+        if message.chat.type == 'private':
+            await bot.send_message(
+                chat_id=message.chat.id,
+                text='🔔 Чтобы включить или выключить уведомления, используйте кнопки ниже.',
+                reply_markup=kb.notify_keyboard
+            )
         else:
-            await bot.send_message(chat_id=message.chat.id, text="Данная функция работает только в личных сообщениях!")
+            await bot.send_message(chat_id=message.chat.id, text="❌ Эта функция работает только в личных сообщениях!")
 
-    if (message.text == 'Учителя'):
+    elif message.text == 'Учителя':
         message_text, keyboard = await create_page()
         await message.answer(message_text, parse_mode='HTML', reply_markup=keyboard)
 
-    if class_id == '':
-        if message.text not in formatted_messages and message.chat.id in users_id or message.chat.id in users_unregister:
-            await bot.send_message(chat_id=message.chat.id, text='Мы не нашли вас в базе данных, попробуйте <b>/start</b> и повторите попытку! Пишите класс в формате: <b>11Т</b>', parse_mode='html')
-    else:
-        if message.text not in formatted_messages:
-            await bot.send_message(chat_id=message.chat.id, text='Я тебя не понимаю... Используй /help')
+    elif message.text not in formatted_messages:
+        await bot.send_message(chat_id=message.chat.id, text='🤖 Я не понимаю эту команду. Используйте /help.')
 pagination_cb = CallbackData('teachers', 'action', 'page')
 
 

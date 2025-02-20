@@ -5439,3 +5439,44 @@ AttributeError: type object 'ReportMessage' has no attribute 'push_message'
 2025-02-20 21:44:51,927 - INFO - Start polling.
 2025-02-20 21:45:07,297 - INFO - Stop polling...
 2025-02-20 21:45:07,301 - WARNING - Goodbye!
+2025-02-20 21:58:29,754 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-20 21:58:29,756 - WARNING - Goodbye!
+2025-02-20 21:58:37,765 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-20 21:58:37,911 - INFO - Attempting refresh to obtain initial access_token
+2025-02-20 21:58:37,925 - INFO - Refreshing access_token
+2025-02-20 21:58:41,576 - INFO - Бот запущен!
+2025-02-20 21:58:44,437 - INFO - Start polling.
+2025-02-20 21:58:44,977 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-8' coro=<Dispatcher._process_polling_updates() done, defined at /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=TypeError("'NoneType' object is not subscriptable")>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "main.py", line 525, in func
+    class_id = users_cursor.execute('SELECT class_id FROM users WHERE tg_id = "{id}"'.format(
+TypeError: 'NoneType' object is not subscriptable
+2025-02-20 22:01:21,608 - INFO - Stop polling...
+2025-02-20 22:01:21,611 - WARNING - Goodbye!
+2025-02-20 22:01:32,933 - WARNING - Goodbye!
+2025-02-20 22:01:38,167 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-20 22:01:38,300 - INFO - Attempting refresh to obtain initial access_token
+2025-02-20 22:01:38,306 - INFO - Refreshing access_token
+2025-02-20 22:01:42,507 - INFO - Бот запущен!
+2025-02-20 22:01:45,348 - INFO - Start polling.
+2025-02-20 22:01:52,594 - INFO - Команда /start от пользователя 984383301
+2025-02-20 22:01:52,598 - INFO - Пользователь @montaanaq добавлен в базу данных!
+2025-02-20 22:01:52,721 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-20 22:01:54,732 - WARNING - Расписание не найдено для класса 11N от пользователя 984383301.
+2025-02-20 22:01:56,542 - INFO - Команда /start от пользователя 984383301
+2025-02-20 22:01:56,665 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-20 22:01:58,745 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-02-20 22:02:05,726 - INFO - Stop polling...
+2025-02-20 22:02:05,729 - WARNING - Goodbye!
+2025-02-20 22:02:21,345 - INFO - Scheduler started
