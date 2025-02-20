@@ -248,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup():
+async def on_startup(_):
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
@@ -301,7 +301,7 @@ async def push_message_to_all_users(message_text: str):
     for user in users:
         user_id = int(user[0])
         try:
-            await bot.send_message(chat_id=user_id, text=message_text)
+            await bot.send_message(chat_id=user_id, text=f'<b>❕ Информация</b>\n\n{message_text}', parse_mode='html')
             success_count += 1
         except Exception as e:
             logger.error(
@@ -469,6 +469,41 @@ async def changes_in_schedule(message: types.Message):
                            parse_mode='html')
 
 
+async def report_bug(message: types.Message):
+    markup = types.InlineKeyboardMarkup().add(types.InlineKeyboardButton(
+        "Сообщить об ошибке", callback_data='report_about_bug'))
+    await bot.send_message(chat_id=message.from_user.id,
+                           text='Если у вы нашли недочет или бот перестал работать, нажмите на кнопку ниже, для связи с разработчиком.', reply_markup=markup)
+
+
+@dp.callback_query_handler(lambda c: c.data == 'report_about_bug')
+async def handle_report_callback(callback_query: types.CallbackQuery):
+    await callback_query.answer()
+    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:')
+    await ReportMessage.report_message.set()
+
+
+async def send_to_admin(message_text: str, username: str):
+    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от @{username} \n\nСообщение: {message_text}')
+
+
+class ReportMessage(StatesGroup):
+    report_message = State()
+
+
+@dp.message_handler(state=ReportMessage.report_message)
+async def process_report_message(message: types.Message, state: FSMContext):
+    message_text = message.text.strip()
+
+    if not message_text:
+        await message.answer('Сообщение не может быть пустым. Попробуйте снова.')
+        return
+
+    await send_to_admin(message_text, message.from_user.username)
+    await message.answer(f'✅ Сообщение успешно отправлено разработчику.')
+    await state.finish()
+
+
 @dp.message_handler(content_types=['text'])
 async def func(message: types.Message):
     class_id = users_cursor.execute('SELECT class_id FROM users WHERE tg_id = "{id}"'.format(
@@ -540,19 +575,13 @@ async def func(message: types.Message):
         await get_schedule_for_day(message.chat.id, str(today), msg)
 
     if (message.text == 'Донат'):
-        markup = types.InlineKeyboardMarkup()
-        donatee = types.InlineKeyboardButton('Отправить донат',
-                                             url='https://www.tinkoff.ru/rm/r_vpHWsJeqjz.TmlPkWbvLU/5Dvvy70865')
-        markup.add(donatee)
+        markup = types.InlineKeyboardMarkup().add(types.InlineKeyboardButton('Отправить донат',
+                                                                             url='https://www.tinkoff.ru/rm/r_vpHWsJeqjz.TmlPkWbvLU/5Dvvy70865'))
         await bot.send_message(chat_id=message.from_user.id,
                                text='Если вам нравится работа бота и вы хотите поддержать разработчика материально, можете отправить донат по кнопке ниже :)', reply_markup=markup)
+
     if (message.text == 'Обратная связь'):
-        markup = types.InlineKeyboardMarkup()
-        razrab = types.InlineKeyboardButton(
-            "Продолжить", url='https://t.me/montaanaq')
-        markup.add(razrab)
-        await bot.send_message(chat_id=message.from_user.id,
-                               text='Писать только по работе бота, если нашли баг, без лишнего и спама. Чтобы связаться с разработчиком нажмите на кнопку ниже', reply_markup=markup)
+        await report_bug(message)
 
     if (message.text == 'Профиль'):
         markup = types.InlineKeyboardMarkup(resize_keyboard=True)
@@ -569,9 +598,11 @@ async def func(message: types.Message):
                                    reply_markup=kb.notify_keyboard)
         else:
             await bot.send_message(chat_id=message.chat.id, text="Данная функция работает только в личных сообщениях!")
+
     if (message.text == 'Учителя'):
         message_text, keyboard = await create_page()
         await message.answer(message_text, parse_mode='HTML', reply_markup=keyboard)
+
     if class_id == '':
         if message.text not in formatted_messages and message.chat.id in users_id or message.chat.id in users_unregister:
             await bot.send_message(chat_id=message.chat.id, text='Мы не нашли вас в базе данных, попробуйте <b>/start</b> и повторите попытку! Пишите класс в формате: <b>11Т</b>', parse_mode='html')
@@ -592,35 +623,35 @@ async def create_page(page: int = 0, per_page: int = 10) -> tuple:
     """Создает страницу с учителями и разделителями"""
     all_teachers = await get_teachers_data()
     total_pages = (len(all_teachers) + per_page - 1) // per_page
-    
+
     start = page * per_page
     end = start + per_page
     page_teachers = all_teachers[start:end]
-    
+
     # Формируем сообщение с разделителями
     separator = '\n' + '—' * 20 + '\n'
     message_text = f"👨🏫 <b>Список учителей:</b>\n\n"
     message_text += separator.join(page_teachers)
     message_text += f"\n\n<b>Страница {page + 1} из {total_pages}</b>"
-    
+
     # Создаем клавиатуру
     keyboard = types.InlineKeyboardMarkup(row_width=2)
     buttons = []
-    
+
     if page > 0:
         buttons.append(types.InlineKeyboardButton(
-            "⬅ Назад", 
+            "⬅ Назад",
             callback_data=pagination_cb.new(action="prev", page=page-1)
         ))
     if page < total_pages - 1:
         buttons.append(types.InlineKeyboardButton(
-            "Вперед ➡", 
+            "Вперед ➡",
             callback_data=pagination_cb.new(action="next", page=page+1)
         ))
-    
+
     if buttons:
         keyboard.add(*buttons)
-    
+
     return message_text, keyboard
 
 
@@ -704,6 +735,7 @@ async def callback(call: types.CallbackQuery) -> None:
     # days
     if call.data in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']:
         message_text = await msg.return_schedule(get_user_schedule(call.message.chat.id), call.data)
+        await call.answer()
         await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=message_text, parse_mode='html', reply_markup=kb.days)
     # notifications
 
@@ -723,8 +755,8 @@ async def callback(call: types.CallbackQuery) -> None:
         await off_notify(call.message)
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
-    # from aiogram.utils import executor
-    # executor.start_polling(
-    #     dispatcher=dp, on_startup=on_startup, skip_updates=False)
+    # import uvicorn
+    # uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
+    from aiogram.utils import executor
+    executor.start_polling(
+        dispatcher=dp, on_startup=on_startup, skip_updates=False)
