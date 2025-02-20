@@ -5430,3 +5430,12 @@ AttributeError: type object 'ReportMessage' has no attribute 'push_message'
 2025-02-20 10:44:38,889 - INFO - Attempting refresh to obtain initial access_token
 2025-02-20 10:44:38,903 - INFO - Refreshing access_token
 2025-02-20 10:44:44,273 - INFO - Бот запущен!
+2025-02-20 10:44:55,371 - INFO - Webhook установлен на https://6f06-95-26-82-58.ngrok-free.app/webhook
+2025-02-20 10:45:04,993 - INFO - Scheduler has been shut down
+2025-02-20 21:44:44,975 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-20 21:44:45,118 - INFO - Attempting refresh to obtain initial access_token
+2025-02-20 21:44:45,130 - INFO - Refreshing access_token
+2025-02-20 21:44:48,929 - INFO - Бот запущен!
+2025-02-20 21:44:51,927 - INFO - Start polling.
+2025-02-20 21:45:07,297 - INFO - Stop polling...
+2025-02-20 21:45:07,301 - WARNING - Goodbye!

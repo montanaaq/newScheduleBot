@@ -248,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup():
+async def on_startup(_):
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
@@ -475,33 +475,50 @@ async def report_bug(message: types.Message):
     await bot.send_message(chat_id=message.from_user.id,
                            text='Если вы нашли несовпадение в расписании или списке учителей, нажмите на кнопку ниже, для связи с разработчиком.', reply_markup=markup)
 
+import time
 
-@dp.callback_query_handler(lambda c: c.data == 'report_about_bug')
-async def handle_report_callback(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:')
-    await ReportMessage.report_message.set()
-
-
-async def send_to_admin(message_text: str, username: str):
-    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от @{username} \n\nСообщение: {message_text}')
+last_report_time = {}
 
 
 class ReportMessage(StatesGroup):
     report_message = State()
 
 
+@dp.callback_query_handler(lambda c: c.data == 'report_about_bug')
+async def handle_report_callback(callback_query: types.CallbackQuery):
+    user_id = callback_query.from_user.id
+    current_time = time.time()
+
+    if user_id in last_report_time and current_time - last_report_time[user_id] < 3600:
+        remaining_time = int(3600 - (current_time - last_report_time[user_id]))
+        minutes = remaining_time // 60
+        seconds = remaining_time % 60
+        await callback_query.answer(f'⏳ Вы уже отправили сообщение. Попробуйте снова через {minutes} мин. {seconds} сек.', show_alert=True)
+        return
+
+    await callback_query.answer()
+    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:')
+    await ReportMessage.report_message.set()
+
+
 @dp.message_handler(state=ReportMessage.report_message)
 async def process_report_message(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
     message_text = message.text.strip()
 
     if not message_text:
         await message.answer('Сообщение не может быть пустым. Попробуйте снова.')
         return
 
+    # Отправка сообщения администратору
     await send_to_admin(message_text, message.from_user.username)
+    last_report_time[user_id] = time.time()  
     await message.answer(f'✅ Сообщение успешно отправлено разработчику.')
     await state.finish()
+
+
+async def send_to_admin(message_text: str, username: str):
+    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от @{username} \n\nСообщение: {message_text}')
 
 
 @dp.message_handler(content_types=['text'])
@@ -760,8 +777,8 @@ async def callback(call: types.CallbackQuery) -> None:
         await call.answer()
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
-    # from aiogram.utils import executor
-    # executor.start_polling(
-    #     dispatcher=dp, on_startup=on_startup, skip_updates=False)
+    # import uvicorn
+    # uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
+    from aiogram.utils import executor
+    executor.start_polling(
+        dispatcher=dp, on_startup=on_startup, skip_updates=False)
