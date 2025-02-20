@@ -473,7 +473,7 @@ async def report_bug(message: types.Message):
     markup = types.InlineKeyboardMarkup().add(types.InlineKeyboardButton(
         "Сообщить об ошибке", callback_data='report_about_bug'))
     await bot.send_message(chat_id=message.from_user.id,
-                           text='Если у вы нашли недочет или бот перестал работать, нажмите на кнопку ниже, для связи с разработчиком.', reply_markup=markup)
+                           text='Если вы нашли несовпадение в расписании или списке учителей, нажмите на кнопку ниже, для связи с разработчиком.', reply_markup=markup)
 
 
 @dp.callback_query_handler(lambda c: c.data == 'report_about_bug')
