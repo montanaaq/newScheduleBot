@@ -248,7 +248,7 @@ async def get_class_schedule(schedule, user_class):
     return class_schedule
 
 
-async def on_startup(_):
+async def on_startup():
     create_tables()
     await read_data_start()
     asyncio.create_task(update_data())
@@ -777,8 +777,8 @@ async def callback(call: types.CallbackQuery) -> None:
         await call.answer()
 
 if __name__ == '__main__':
-    # import uvicorn
-    # uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
-    from aiogram.utils import executor
-    executor.start_polling(
-        dispatcher=dp, on_startup=on_startup, skip_updates=False)
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
+    # from aiogram.utils import executor
+    # executor.start_polling(
+    #     dispatcher=dp, on_startup=on_startup, skip_updates=False)
