@@ -43,6 +43,8 @@ WEBHOOK_PATH = "/webhook"
 PORT = int(os.getenv('PORT', 8000))
 ADMIN_ID = os.getenv('ADMIN_ID', None)
 
+isLocal = False
+
 storage = MemoryStorage()
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot, storage=storage)
@@ -348,7 +350,7 @@ async def start_command(message: types.Message):
 
 async def select_class(message: types.Message):
     global class_id
-    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате: <b>11Т</b>\nТеперь напиши свой класс: ", parse_mode='html')
+    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате <b>11Т</b> пиши без пробелов.\nТеперь напиши свой класс: ", parse_mode='html')
     await Class_id.wait_for_class.set()
     logger.info(
         f'Ожидание ввода класса от пользователя {message.chat.id}')
@@ -411,7 +413,7 @@ async def set_class(id: int, class_id: str):
 
 async def start_schedule(message: types.Message):
     await bot.send_message(chat_id=message.chat.id,
-                           text='Теперь можешь пользоваться ботом! Для подробной информации о командах используй <b>/help</b>', reply_markup=kb.main,
+                           text='Теперь можешь пользоваться ботом! Для подробной информации о командах используй <b>/help</b>\n\nТакже у нас появился новостной канал со всеми обновлениями бота @gymn33_bot_news!', reply_markup=kb.main,
                            parse_mode='html')
 
 
@@ -458,6 +460,23 @@ async def donate(message: types.Message):
                            text='Если вам нравится работа бота и вы хотите поддержать разработчика материально, можете отправить донат по кнопке ниже :)'.format(
                                message.from_user), reply_markup=markup)
 
+
+# @dp.message_handler(commands=['send_to_channel'])
+# async def send_to_channel(message: types.Message):
+#     keyboard = types.InlineKeyboardMarkup(row_width=1).add(types.InlineKeyboardButton(text='Перейти в бота', url='https://telegram.me/gymn33_bot'))
+#     await bot.send_message(chat_id=-1002406956516, text='''
+# 🤖 <b>Всем привет!</b> Наконец-то мы смогли возобновить работу над ботом и исправить все недочёты предыдущей версии. Сейчас данный бот работает в пределах <b>Гимназии №33 г.Казань</b>. Сейчас бот успешно работает с расписанием для 7-11 классов включительно. 💫
+
+# 🆘 Если нашли несовпадение в расписании или бот работает неисправно нажмите на кнопку <b>"Обратная связь"</b> и опишите проблему с которой вы столкнулись.
+
+# Список доступных классов на данный момент:
+# <b>7А, 7Б, 7В, 7И</b>
+# <b>8А, 8Б, 8В, 8Г, 8И</b>
+# <b>9А, 9Б, 9В, 9И</b>
+# <b>10Б, 10Т</b>
+# <b>11Б, 11Т</b>
+
+# ''', reply_markup=keyboard, parse_mode='html')
 
 @dp.message_handler(commands=['unregister'])
 async def unregister(message: types.Message):
@@ -791,8 +810,10 @@ async def callback(call: types.CallbackQuery) -> None:
         await call.answer()
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
-    # from aiogram.utils import executor
-    # executor.start_polling(
-    #     dispatcher=dp, on_startup=on_startup, skip_updates=False)
+    if isLocal:
+        from aiogram.utils import executor
+        executor.start_polling(
+            dispatcher=dp, on_startup=on_startup, skip_updates=False)
+    else:
+        import uvicorn
+        uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)

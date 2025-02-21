@@ -5480,3 +5480,29 @@ TypeError: 'NoneType' object is not subscriptable
 2025-02-20 22:02:05,726 - INFO - Stop polling...
 2025-02-20 22:02:05,729 - WARNING - Goodbye!
 2025-02-20 22:02:21,345 - INFO - Scheduler started
+2025-02-21 12:34:33,590 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-21 12:34:33,713 - INFO - Attempting refresh to obtain initial access_token
+2025-02-21 12:34:33,725 - INFO - Refreshing access_token
+2025-02-21 12:34:36,919 - INFO - Бот запущен!
+2025-02-21 12:34:39,562 - INFO - Start polling.
+2025-02-21 12:35:38,732 - INFO - Stop polling...
+2025-02-21 12:35:38,735 - WARNING - Goodbye!
+2025-02-21 12:35:41,875 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-21 12:35:41,993 - INFO - Attempting refresh to obtain initial access_token
+2025-02-21 12:35:41,998 - INFO - Refreshing access_token
+2025-02-21 12:35:45,055 - INFO - Бот запущен!
+2025-02-21 12:35:47,259 - INFO - Start polling.
+2025-02-21 12:36:22,390 - INFO - Stop polling...
+2025-02-21 12:36:22,393 - WARNING - Goodbye!
+2025-02-21 12:43:01,428 - INFO - Scheduler started
+2025-02-21 12:43:12,951 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-21 12:43:13,078 - INFO - Attempting refresh to obtain initial access_token
+2025-02-21 12:43:13,090 - INFO - Refreshing access_token
+2025-02-21 12:43:15,911 - INFO - Бот запущен!
+2025-02-21 12:43:18,635 - INFO - Start polling.
+2025-02-21 12:43:23,216 - INFO - Команда /start от пользователя 984383301
+2025-02-21 12:43:27,601 - INFO - Команда /start от пользователя 984383301
+2025-02-21 12:43:27,702 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-02-21 12:43:31,271 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-02-21 12:43:39,681 - INFO - Stop polling...
+2025-02-21 12:43:39,681 - WARNING - Goodbye!
