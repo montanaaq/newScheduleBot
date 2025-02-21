@@ -522,7 +522,7 @@ async def handle_report_callback(callback_query: types.CallbackQuery):
 
 async def send_to_admin(message_text: str, username: str):
     username = username if username else 'Без имени пользователя'
-    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от {username} \n\nСообщение: {message_text}')
+    await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от @{username} \n\nСообщение: {message_text}')
 
 
 @dp.message_handler(state=ReportMessage.report_message)
