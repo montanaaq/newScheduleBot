@@ -5506,3 +5506,31 @@ TypeError: 'NoneType' object is not subscriptable
 2025-02-21 12:43:31,271 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
 2025-02-21 12:43:39,681 - INFO - Stop polling...
 2025-02-21 12:43:39,681 - WARNING - Goodbye!
+2025-02-22 15:53:15,922 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-22 15:53:16,046 - INFO - Attempting refresh to obtain initial access_token
+2025-02-22 15:53:16,054 - INFO - Refreshing access_token
+2025-02-22 15:53:17,695 - INFO - Бот запущен!
+2025-02-22 15:53:18,533 - INFO - Start polling.
+2025-02-22 15:53:34,897 - INFO - Stop polling...
+2025-02-22 15:53:34,904 - WARNING - Goodbye!
+2025-02-22 15:53:36,993 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-22 15:53:37,114 - INFO - Attempting refresh to obtain initial access_token
+2025-02-22 15:53:37,123 - INFO - Refreshing access_token
+2025-02-22 15:53:38,423 - INFO - Бот запущен!
+2025-02-22 15:53:39,297 - INFO - Start polling.
+2025-02-22 15:55:17,879 - INFO - Stop polling...
+2025-02-22 15:55:17,888 - WARNING - Goodbye!
+2025-02-22 15:55:20,601 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-22 15:55:20,728 - INFO - Attempting refresh to obtain initial access_token
+2025-02-22 15:55:20,733 - INFO - Refreshing access_token
+2025-02-22 15:55:22,049 - INFO - Бот запущен!
+2025-02-22 15:55:23,457 - INFO - Start polling.
+2025-02-22 15:55:25,789 - INFO - Stop polling...
+2025-02-22 15:55:25,791 - WARNING - Goodbye!
+2025-02-22 15:55:31,330 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-22 15:55:31,441 - INFO - Attempting refresh to obtain initial access_token
+2025-02-22 15:55:31,446 - INFO - Refreshing access_token
+2025-02-22 15:55:33,789 - INFO - Бот запущен!
+2025-02-22 15:55:36,177 - INFO - Start polling.
+2025-02-22 15:55:50,360 - INFO - Stop polling...
+2025-02-22 15:55:50,362 - WARNING - Goodbye!

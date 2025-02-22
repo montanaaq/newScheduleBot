@@ -11,7 +11,7 @@ async def return_schedule(schedule_data: dict, requested_day: str) -> str:
         "thursday": "Четверг",
         "friday": "Пятница",
         "saturday": "Суббота",
-        "sunday": "Воскресенье"
+        "sunday": "Воскресенье",
     }
 
     def format_day(day_name: str, lessons: list) -> str:
@@ -40,5 +40,7 @@ async def return_schedule(schedule_data: dict, requested_day: str) -> str:
 
     if day_name and day_name in schedule_data:
         return format_day(day_name, schedule_data[day_name])
+    if requested_day == 'sunday':
+        return 'Завтра воскресенье! 😴'
 
     return "❌ Неверный день недели."

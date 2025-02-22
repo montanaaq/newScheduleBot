@@ -592,7 +592,7 @@ async def func(message: types.Message):
             "3": 'thursday',
             "4": 'friday',
             "5": 'saturday',
-            "6": 'sunday'
+            "6": 'sunday',
         }
 
         if day in day_mapping:
