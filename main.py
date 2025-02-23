@@ -578,7 +578,7 @@ async def func(message: types.Message):
     users_id = [row[0] for row in users_cursor.execute(
         'SELECT tg_id FROM users').fetchall()]
 
-    async def get_schedule_for_day(user_id: int, day: str, msg: str):
+    async def get_schedule_for_day(user_id: int, day: str, msg: str, context: str = 'today'):
         global user_schedule, teachers
         if day == 'full':
             response = await msg.return_schedule(get_user_schedule(message.chat.id), 'full')
@@ -597,7 +597,7 @@ async def func(message: types.Message):
 
         if day in day_mapping:
             requested_day = day_mapping[day]
-            response = await msg.return_schedule(get_user_schedule(message.chat.id), requested_day)
+            response = await msg.return_schedule(get_user_schedule(message.chat.id), requested_day, context)
             await bot.send_message(chat_id=user_id, text=response, parse_mode='html')
         else:
             await bot.send_message(chat_id=user_id, text='❌ Неверный день недели!')
@@ -615,11 +615,11 @@ async def func(message: types.Message):
 
     elif message.text == 'На завтра':
         tomorrow = (datetime.now().weekday() + 1) % 7
-        await get_schedule_for_day(message.chat.id, str(tomorrow), msg)
+        await get_schedule_for_day(message.chat.id, str(tomorrow), msg, 'tommorow')
 
     elif message.text == 'На сегодня':
         today = datetime.now().weekday()
-        await get_schedule_for_day(message.chat.id, str(today), msg)
+        await get_schedule_for_day(message.chat.id, str(today), msg, 'today')
 
     elif message.text == 'Донат':
         markup = types.InlineKeyboardMarkup().add(

@@ -1,4 +1,4 @@
-async def return_schedule(schedule_data: dict, requested_day: str) -> str:
+async def return_schedule(schedule_data: dict, requested_day: str, context: str = "today") -> str:
     """Возвращает отформатированное расписание, оптимизированное для Telegram."""
 
     if not schedule_data:
@@ -31,6 +31,13 @@ async def return_schedule(schedule_data: dict, requested_day: str) -> str:
 
         return f"{header}<pre>{table_header}{schedule_body}</pre>"
 
+    # Обработка воскресенья
+    if requested_day == 'sunday':
+        if context == "today":
+            return 'Сегодня воскресенье! 😴'
+        elif context == "tomorrow":
+            return 'Завтра воскресенье! 😴'
+
     # Если запрашивается полное расписание
     if requested_day == 'full':
         return "\n\n".join(format_day(day, lessons) for day, lessons in schedule_data.items())
@@ -40,7 +47,5 @@ async def return_schedule(schedule_data: dict, requested_day: str) -> str:
 
     if day_name and day_name in schedule_data:
         return format_day(day_name, schedule_data[day_name])
-    if requested_day == 'sunday':
-        return 'Завтра воскресенье! 😴'
 
     return "❌ Неверный день недели."

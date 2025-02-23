@@ -5534,3 +5534,33 @@ TypeError: 'NoneType' object is not subscriptable
 2025-02-22 15:55:36,177 - INFO - Start polling.
 2025-02-22 15:55:50,360 - INFO - Stop polling...
 2025-02-22 15:55:50,362 - WARNING - Goodbye!
+2025-02-23 21:10:07,458 - WARNING - Goodbye!
+2025-02-23 21:10:09,593 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-23 21:10:09,736 - INFO - Attempting refresh to obtain initial access_token
+2025-02-23 21:10:09,748 - INFO - Refreshing access_token
+2025-02-23 21:10:19,775 - INFO - Бот запущен!
+2025-02-23 21:10:22,511 - INFO - Start polling.
+2025-02-23 21:11:02,367 - INFO - Stop polling...
+2025-02-23 21:11:02,368 - WARNING - Goodbye!
+2025-02-23 21:11:18,593 - WARNING - Goodbye!
+2025-02-23 21:11:21,156 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-23 21:11:21,284 - INFO - Attempting refresh to obtain initial access_token
+2025-02-23 21:11:21,290 - INFO - Refreshing access_token
+2025-02-23 21:11:23,861 - INFO - Бот запущен!
+2025-02-23 21:11:24,954 - INFO - Start polling.
+2025-02-23 21:11:55,497 - INFO - Stop polling...
+2025-02-23 21:11:55,498 - WARNING - Goodbye!
+2025-02-23 21:11:58,886 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-23 21:11:59,030 - INFO - Attempting refresh to obtain initial access_token
+2025-02-23 21:11:59,036 - INFO - Refreshing access_token
+2025-02-23 21:12:29,065 - WARNING - Goodbye!
+2025-02-23 21:12:33,115 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-02-23 21:12:33,257 - INFO - Attempting refresh to obtain initial access_token
+2025-02-23 21:12:33,262 - INFO - Refreshing access_token
+2025-02-23 21:12:34,989 - INFO - Бот запущен!
+2025-02-23 21:12:36,190 - INFO - Start polling.
+2025-02-23 21:13:15,117 - INFO - Stop polling...
+2025-02-23 21:13:15,118 - WARNING - Goodbye!
+2025-02-23 21:14:18,216 - INFO - Scheduler started
+2025-02-23 21:14:18,336 - INFO - Attempting refresh to obtain initial access_token
+2025-02-23 21:14:18,348 - INFO - Refreshing access_token
