@@ -350,7 +350,7 @@ async def start_command(message: types.Message):
 
 async def select_class(message: types.Message):
     global class_id
-    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате <b>11Т</b> пиши без пробелов.\nТеперь напиши свой класс: ", parse_mode='html')
+    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате <b>11Т</b> пиши без пробелов. Список доступных классов можешь посмотреть в закрепленном сообщении: @gymn33_bot_news\nТеперь напиши свой класс: ", parse_mode='html')
     await Class_id.wait_for_class.set()
     logger.info(
         f'Ожидание ввода класса от пользователя {message.chat.id}')
