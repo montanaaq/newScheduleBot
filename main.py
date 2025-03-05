@@ -1,8 +1,8 @@
-import time
 import asyncio
 import json
 import logging
 import os
+import time
 from contextlib import asynccontextmanager
 from datetime import datetime
 from pprint import pprint
@@ -285,6 +285,36 @@ async def push_to_users(message: types.Message):
         await message.answer('Я тебя не понимаю... Используй /help')
 
 
+@dp.message_handler(commands=['clear_classes'])
+async def clear_classes(message: types.Message):
+    if ADMIN_ID is not None:
+        if message.chat.id == int(ADMIN_ID):
+            """Remove all class IDs for users and hide reply keyboards for each user."""
+            conn = get_users_db_connection()
+            cursor = conn.cursor()
+
+            # Update all users' class_id to an empty string
+            cursor.execute("UPDATE users SET class_id = ''")
+            conn.commit()
+
+            # Fetch all user Telegram IDs
+            cursor.execute("SELECT tg_id FROM users")
+            users = cursor.fetchall()
+            conn.close()
+
+            # Hide keyboards for each user
+            for user in users:
+                tg_id = user[0]
+                try:
+                    await bot.send_message(tg_id, "Ваш класс был сброшен! Чтобы указать класс, используйте /start", reply_markup=types.ReplyKeyboardRemove())
+                except Exception as e:
+                    print(f"Failed to send message to {tg_id}: {e}")
+
+            # Confirm execution to the admin
+            await message.answer("Все классы для пользователей были сброшены и клавиатуры были убраны")
+
+
+
 @dp.callback_query_handler(lambda c: c.data == 'send_push_message')
 async def handle_push_callback(callback_query: types.CallbackQuery):
     """Handles the 'Отправить сообщение' button."""
@@ -392,6 +422,7 @@ async def complete_class(message: types.Message, state: FSMContext):
         # Пытаемся отредактировать оригинальное сообщение
         message_id_to_edit = user_data.get('class_message_id')
         if message_id_to_edit:
+            await set_class(message.chat.id, message.text.upper())
             await bot.edit_message_text(
                 chat_id=message.chat.id,
                 message_id=message_id_to_edit,
@@ -400,6 +431,7 @@ async def complete_class(message: types.Message, state: FSMContext):
             )
     except Exception as e:
         logger.error(f"Ошибка редактирования сообщения: {e}")
+        await set_class(message.chat.id, message.text.upper())
         # Если не удалось отредактировать, отправляем новое сообщение
         await message.answer(f'✅ Успешно! Ваш класс: <b>{message.text.upper()}</b>', parse_mode='html')
 
