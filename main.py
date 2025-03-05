@@ -334,26 +334,33 @@ async def process_push_message(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(commands=["start"])
-async def start_command(message: types.Message):
+async def start_command(message: types.Message, state: FSMContext):
     logger.info(f'Команда /start от пользователя {message.chat.id}')
     user = users_cursor.execute('SELECT tg_id, class_id FROM users WHERE tg_id = ?',
                                 (message.chat.id,)).fetchone()
     if user is None:
         await add_user_to_db(message.chat.id, f'@{message.from_user.username}')
-        await select_class(message)
+        await select_class(message, state)
 
     elif user[1] == "":
-        await select_class(message)
+        await select_class(message, state)
     else:
-        await bot.send_message(chat_id=message.chat.id, text='Ты уже зарегистрирован! Для сброса регистрации используй <b>/unregister</b>', parse_mode='html')
+        await message.answer('Ты уже зарегистрирован! Для сброса регистрации используй <b>/unregister</b>', parse_mode='html')
 
 
-async def select_class(message: types.Message):
-    global class_id
-    class_id = await bot.send_message(chat_id=message.chat.id, text=f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\nНапиши класс в формате <b>11Т</b> пиши без пробелов. Список доступных классов можешь посмотреть в закрепленном сообщении: @gymn33_bot_news\nТеперь напиши свой класс: ", parse_mode='html')
+async def select_class(message: types.Message, state: FSMContext):
+    # Отправляем сообщение и сохраняем его ID в состоянии
+    sent_message = await message.answer(
+        f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\n"
+        "Напиши класс в формате <b>11Т</b> пиши без пробелов. Список доступных классов можешь посмотреть в закрепленном сообщении: @gymn33_bot_news\n"
+        "Теперь напиши свой класс: ", 
+        parse_mode='html'
+    )
+    
+    # Сохраняем ID сообщения в состоянии
+    await state.update_data(class_message_id=sent_message.message_id)
     await Class_id.wait_for_class.set()
-    logger.info(
-        f'Ожидание ввода класса от пользователя {message.chat.id}')
+    logger.info(f'Ожидание ввода класса от пользователя {message.chat.id}')
 
 
 class Class_id(StatesGroup):
@@ -363,47 +370,41 @@ class Class_id(StatesGroup):
 @dp.message_handler(state=Class_id.wait_for_class)
 async def proccess_select_class(message: types.Message, state: FSMContext):
     user_class = message.text.upper()
-    async with state.proxy() as data:
-        data['class_id'] = user_class
-
+    user_data = await state.get_data()
+    
     user_schedule = await get_class_schedule(schedule, user_class)
 
     if user_schedule:
         await save_user_schedule(message.chat.id, user_class, schedule)
-        await complete_class(message)
-        logger.info(
-            f'Пользователь {message.chat.id} ввел класс {user_class} и расписание сохранено.')
+        await complete_class(message, state)  # Передаем state
+        logger.info(f'Пользователь {message.chat.id} ввел класс {user_class} и расписание сохранено.')
     else:
-        await bot.send_message(chat_id=message.chat.id, text="Расписание для указанного класса не найдено. Пожалуйста, проверьте правильность ввода и повторите /start.")
-        logger.warning(
-            f'Расписание не найдено для класса {user_class} от пользователя {message.chat.id}.')
-
+        await message.answer("Расписание для указанного класса не найдено. Пожалуйста, проверьте правильность ввода и повторите /start.")
+        logger.warning(f'Расписание не найдено для класса {user_class} от пользователя {message.chat.id}.')
+    
     await state.finish()
 
-class_id = None  # Инициализируем переменную для хранения объекта сообщения
 
+async def complete_class(message: types.Message, state: FSMContext):
+    user_data = await state.get_data()
+    
+    try:
+        # Пытаемся отредактировать оригинальное сообщение
+        message_id_to_edit = user_data.get('class_message_id')
+        if message_id_to_edit:
+            await bot.edit_message_text(
+                chat_id=message.chat.id,
+                message_id=message_id_to_edit,
+                text=f'✅ Успешно! Ваш класс: <b>{message.text.upper()}</b>',
+                parse_mode='html'
+            )
+    except Exception as e:
+        logger.error(f"Ошибка редактирования сообщения: {e}")
+        # Если не удалось отредактировать, отправляем новое сообщение
+        await message.answer(f'✅ Успешно! Ваш класс: <b>{message.text.upper()}</b>', parse_mode='html')
 
-async def complete_class(message: types.Message):
-    global class_id, classes
-    if isinstance(message.text, str) and 2 <= len(message.text) <= 3 and message.text.upper() in classes:
-        await set_class(message.chat.id, message.text.upper())
-
-        # Редактируем сообщение с запросом класса, а не удаляем его
-        await bot.edit_message_text(
-            chat_id=message.chat.id,
-            message_id=class_id.message_id,
-            text=f'✅ Успешно! Ваш класс: <b>{message.text.upper()}</b>',
-            parse_mode='html'
-        )
-
-        await asyncio.sleep(0.3)
-        await start_schedule(message)
-    else:
-        await bot.send_message(chat_id=message.chat.id, text='Ошибка! Введите корректный класс: \nПример: 10Т')
-        await Class_id.wait_for_class.set()
-        logger.warning(
-            f'Ошибка ввода класса от пользователя {message.chat.id}: {message.text}')
-
+    await asyncio.sleep(0.3)
+    await start_schedule(message)
 
 async def set_class(id: int, class_id: str):
     users_cursor.execute('UPDATE users SET class_id = "{class_name}" WHERE tg_id = "{id}"'.format(

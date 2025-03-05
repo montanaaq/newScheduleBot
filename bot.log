@@ -5564,3 +5564,13 @@ TypeError: 'NoneType' object is not subscriptable
 2025-02-23 21:14:18,216 - INFO - Scheduler started
 2025-02-23 21:14:18,336 - INFO - Attempting refresh to obtain initial access_token
 2025-02-23 21:14:18,348 - INFO - Refreshing access_token
+2025-03-05 17:56:24,760 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-05 17:56:24,895 - INFO - Attempting refresh to obtain initial access_token
+2025-03-05 17:56:24,910 - INFO - Refreshing access_token
+2025-03-05 17:56:29,398 - INFO - Бот запущен!
+2025-03-05 17:56:31,207 - INFO - Start polling.
+2025-03-05 17:56:42,665 - INFO - Команда /start от пользователя 984383301
+2025-03-05 17:56:43,216 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-05 17:56:47,250 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-05 17:57:44,983 - INFO - Stop polling...
+2025-03-05 17:57:44,983 - WARNING - Goodbye!
