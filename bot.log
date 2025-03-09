@@ -5647,3 +5647,232 @@ TypeError: 'NoneType' object is not subscriptable
 2025-03-10 00:55:55,774 - INFO - Attempting refresh to obtain initial access_token
 2025-03-10 00:55:55,806 - INFO - Refreshing access_token
 2025-03-10 00:55:58,078 - INFO - Бот запущен!
+2025-03-10 01:04:35,682 - INFO - Scheduler started
+2025-03-10 01:04:35,781 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:04:35,815 - INFO - Refreshing access_token
+2025-03-10 01:04:38,130 - INFO - Бот запущен!
+2025-03-10 01:04:44,201 - INFO - Scheduler has been shut down
+2025-03-10 01:04:44,605 - INFO - Scheduler started
+2025-03-10 01:04:44,697 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:04:44,731 - INFO - Refreshing access_token
+2025-03-10 01:04:47,480 - INFO - Бот запущен!
+2025-03-10 01:04:50,832 - INFO - Scheduler has been shut down
+2025-03-10 01:04:52,372 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:04:52,477 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:04:52,510 - INFO - Refreshing access_token
+2025-03-10 01:04:54,321 - INFO - Бот запущен!
+2025-03-10 01:04:56,170 - INFO - Start polling.
+2025-03-10 01:04:56,371 - INFO - Команда /start от пользователя 891795148
+2025-03-10 01:04:56,374 - INFO - Пользователь @None добавлен в базу данных!
+2025-03-10 01:04:56,454 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-9' coro=<Dispatcher._process_polling_updates() done, defined at /Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=BotBlocked('Forbidden: bot was blocked by the user')>
+Traceback (most recent call last):
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/main.py", line 372, in start_command
+    await select_class(message, state)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/main.py", line 382, in select_class
+    sent_message = await message.answer(
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/types/message.py", line 438, in answer
+    return await self.bot.send_message(
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/bot.py", line 346, in send_message
+    result = await self.request(api.Methods.SEND_MESSAGE, payload)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/api.py", line 121, in check_result
+    exceptions.Unauthorized.detect(description)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/utils/exceptions.py", line 140, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.BotBlocked: Forbidden: bot was blocked by the user
+2025-03-10 01:05:05,378 - INFO - Stop polling...
+2025-03-10 01:05:05,380 - WARNING - Goodbye!
+2025-03-10 01:05:08,761 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:05:08,861 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:05:08,893 - INFO - Refreshing access_token
+2025-03-10 01:05:11,905 - INFO - Бот запущен!
+2025-03-10 01:05:14,327 - INFO - Start polling.
+2025-03-10 01:05:25,786 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:05:25,872 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-10 01:05:28,345 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-10 01:06:26,603 - INFO - Stop polling...
+2025-03-10 01:06:26,606 - WARNING - Goodbye!
+2025-03-10 01:06:28,826 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:06:28,987 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:06:29,020 - INFO - Refreshing access_token
+2025-03-10 01:06:31,819 - INFO - Бот запущен!
+2025-03-10 01:06:33,180 - INFO - Start polling.
+2025-03-10 01:06:33,300 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:06:33,385 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-10 01:06:35,765 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-10 01:06:36,608 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:06:43,154 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:06:43,234 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-10 01:06:48,093 - INFO - Пользователь 984383301 ввел класс 8А и расписание сохранено.
+2025-03-10 01:06:58,256 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:06:58,334 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-10 01:06:59,714 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-10 01:07:34,331 - INFO - Stop polling...
+2025-03-10 01:07:34,332 - WARNING - Goodbye!
+2025-03-10 01:07:36,234 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:07:36,339 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:07:36,372 - INFO - Refreshing access_token
+2025-03-10 01:07:38,664 - INFO - Бот запущен!
+2025-03-10 01:07:39,580 - INFO - Start polling.
+2025-03-10 01:08:27,635 - INFO - Stop polling...
+2025-03-10 01:08:27,637 - WARNING - Goodbye!
+2025-03-10 01:08:31,616 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:08:31,733 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:08:31,765 - INFO - Refreshing access_token
+2025-03-10 01:08:34,191 - INFO - Бот запущен!
+2025-03-10 01:08:35,050 - INFO - Start polling.
+2025-03-10 01:09:11,469 - INFO - Stop polling...
+2025-03-10 01:09:11,471 - WARNING - Goodbye!
+2025-03-10 01:09:15,351 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:09:15,450 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:09:15,483 - INFO - Refreshing access_token
+2025-03-10 01:09:18,342 - INFO - Бот запущен!
+2025-03-10 01:09:20,703 - INFO - Start polling.
+2025-03-10 01:10:51,477 - INFO - Stop polling...
+2025-03-10 01:10:51,481 - WARNING - Goodbye!
+2025-03-10 01:10:53,401 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:10:53,505 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:10:53,537 - INFO - Refreshing access_token
+2025-03-10 01:10:54,847 - INFO - Бот запущен!
+2025-03-10 01:10:56,181 - INFO - Start polling.
+2025-03-10 01:11:01,411 - INFO - Stop polling...
+2025-03-10 01:11:01,413 - WARNING - Goodbye!
+2025-03-10 01:11:03,104 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:11:03,205 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:11:03,237 - INFO - Refreshing access_token
+2025-03-10 01:11:05,061 - INFO - Бот запущен!
+2025-03-10 01:11:06,420 - INFO - Start polling.
+2025-03-10 01:12:14,111 - INFO - Stop polling...
+2025-03-10 01:12:14,113 - WARNING - Goodbye!
+2025-03-10 01:12:18,805 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:12:18,915 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:12:18,948 - INFO - Refreshing access_token
+2025-03-10 01:12:23,220 - INFO - Бот запущен!
+2025-03-10 01:12:25,226 - INFO - Start polling.
+2025-03-10 01:13:26,941 - INFO - Stop polling...
+2025-03-10 01:13:26,943 - WARNING - Goodbye!
+2025-03-10 01:13:30,765 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:13:30,883 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:13:30,915 - INFO - Refreshing access_token
+2025-03-10 01:13:34,501 - INFO - Бот запущен!
+2025-03-10 01:13:36,395 - INFO - Start polling.
+2025-03-10 01:15:32,033 - INFO - Stop polling...
+2025-03-10 01:15:32,035 - WARNING - Goodbye!
+2025-03-10 01:15:38,254 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:15:38,380 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:15:38,412 - INFO - Refreshing access_token
+2025-03-10 01:15:41,972 - INFO - Бот запущен!
+2025-03-10 01:15:43,986 - INFO - Start polling.
+2025-03-10 01:15:52,816 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:16:02,168 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:16:02,734 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-10 01:16:05,020 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-10 01:16:35,843 - INFO - Stop polling...
+2025-03-10 01:16:35,845 - WARNING - Goodbye!
+2025-03-10 01:16:39,147 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:16:39,253 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:16:39,285 - INFO - Refreshing access_token
+2025-03-10 01:16:43,313 - INFO - Бот запущен!
+2025-03-10 01:16:45,120 - INFO - Start polling.
+2025-03-10 01:17:20,686 - INFO - Stop polling...
+2025-03-10 01:17:20,688 - WARNING - Goodbye!
+2025-03-10 01:17:23,717 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:17:23,818 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:17:23,851 - INFO - Refreshing access_token
+2025-03-10 01:17:27,990 - INFO - Бот запущен!
+2025-03-10 01:17:29,805 - INFO - Start polling.
+2025-03-10 01:17:39,897 - INFO - Stop polling...
+2025-03-10 01:17:39,898 - WARNING - Goodbye!
+2025-03-10 01:17:42,886 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:17:43,011 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:17:43,044 - INFO - Refreshing access_token
+2025-03-10 01:17:46,641 - INFO - Бот запущен!
+2025-03-10 01:17:48,427 - INFO - Start polling.
+2025-03-10 01:21:02,096 - INFO - Stop polling...
+2025-03-10 01:21:02,100 - WARNING - Goodbye!
+2025-03-10 01:21:09,613 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:21:09,734 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:21:09,766 - INFO - Refreshing access_token
+2025-03-10 01:21:13,534 - INFO - Бот запущен!
+2025-03-10 01:21:15,356 - INFO - Start polling.
+2025-03-10 01:21:18,617 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:21:51,324 - INFO - Stop polling...
+2025-03-10 01:21:51,327 - WARNING - Goodbye!
+2025-03-10 01:21:56,111 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:21:56,222 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:21:56,255 - INFO - Refreshing access_token
+2025-03-10 01:21:59,933 - INFO - Бот запущен!
+2025-03-10 01:22:01,723 - INFO - Start polling.
+2025-03-10 01:22:07,096 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:22:07,685 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-8' coro=<Dispatcher._process_polling_updates() done, defined at /Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=BadRequest('Member list is inaccessible')>
+Traceback (most recent call last):
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/main.py", line 366, in start_command
+    if await sub_verification(bot.get_chat_member(chat_id="@sneak_news_otzivi", user_id=message.from_user.id)):
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/main.py", line 354, in sub_verification
+    member = await chat_member
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/bot.py", line 2682, in get_chat_member
+    result = await self.request(api.Methods.GET_CHAT_MEMBER, payload)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/bot/api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "/Users/amir/Desktop/Code/bots/newScheduleBot/.venv/lib/python3.10/site-packages/aiogram/utils/exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Member list is inaccessible
+2025-03-10 01:22:33,297 - INFO - Stop polling...
+2025-03-10 01:22:33,298 - WARNING - Goodbye!
+2025-03-10 01:22:37,462 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:22:37,575 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:22:37,606 - INFO - Refreshing access_token
+2025-03-10 01:22:41,325 - INFO - Бот запущен!
+2025-03-10 01:22:43,190 - INFO - Start polling.
+2025-03-10 01:22:44,781 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:22:58,227 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:22:59,347 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-10 01:23:09,474 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-10 01:23:10,505 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:23:47,474 - INFO - Stop polling...
+2025-03-10 01:23:47,476 - WARNING - Goodbye!
+2025-03-10 01:23:51,474 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:23:51,585 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:23:51,616 - INFO - Refreshing access_token
+2025-03-10 01:23:55,591 - INFO - Бот запущен!
+2025-03-10 01:23:57,559 - INFO - Start polling.
+2025-03-10 01:23:58,711 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:26:30,749 - INFO - Stop polling...
+2025-03-10 01:26:30,752 - WARNING - Goodbye!
+2025-03-10 01:26:42,119 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-10 01:26:42,247 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 01:26:42,279 - INFO - Refreshing access_token
+2025-03-10 01:26:46,024 - INFO - Бот запущен!
+2025-03-10 01:26:47,806 - INFO - Start polling.
+2025-03-10 01:27:12,101 - INFO - Команда /start от пользователя 984383301
+2025-03-10 01:28:17,402 - INFO - Stop polling...
+2025-03-10 01:28:17,405 - WARNING - Goodbye!

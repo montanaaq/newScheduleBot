@@ -32,10 +32,10 @@ changes_in_schedule = InlineKeyboardButton(
     'Изменения в расписании', callback_data='changes_in_schedule')
 notify = InlineKeyboardButton('Оповещения', callback_data='notify')
 unregister = InlineKeyboardButton(
-    'Сбросить регистрацию', callback_data='unreg')
+    'Сменить класс', callback_data='unreg')
 
 unregister_markup = InlineKeyboardMarkup(resize_keyboard=True).add(
-    InlineKeyboardButton('Сбросить регистрацию', callback_data='unreg')
+    InlineKeyboardButton('Сменить класс', callback_data='unreg')
 )
 
 on = InlineKeyboardButton('🔔 Включить оповещения',

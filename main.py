@@ -293,16 +293,13 @@ async def clear_classes(message: types.Message):
             conn = get_users_db_connection()
             cursor = conn.cursor()
 
-            # Update all users' class_id to an empty string
             cursor.execute("UPDATE users SET class_id = ''")
             conn.commit()
 
-            # Fetch all user Telegram IDs
             cursor.execute("SELECT tg_id FROM users")
             users = cursor.fetchall()
             conn.close()
 
-            # Hide keyboards for each user
             for user in users:
                 tg_id = user[0]
                 try:
@@ -312,15 +309,6 @@ async def clear_classes(message: types.Message):
 
             # Confirm execution to the admin
             await message.answer("Все классы для пользователей были сброшены и клавиатуры были убраны")
-
-
-
-@dp.callback_query_handler(lambda c: c.data == 'send_push_message')
-async def handle_push_callback(callback_query: types.CallbackQuery):
-    """Handles the 'Отправить сообщение' button."""
-    await callback_query.answer()  # Closes the loading animation on the button
-    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:')
-    await PushMessage.push_message.set()
 
 
 async def push_message_to_all_users(message_text: str):
@@ -362,31 +350,40 @@ async def process_push_message(message: types.Message, state: FSMContext):
     await message.answer(f'✅ Сообщение успешно отправлено всем пользователям.')
     await state.finish()
 
+async def sub_verification(chat_member: types.ChatMember) -> bool:
+    member = await chat_member
+    if member.status != 'left':
+        return True
+    else:
+        return False
+
 
 @dp.message_handler(commands=["start"])
 async def start_command(message: types.Message, state: FSMContext):
     logger.info(f'Команда /start от пользователя {message.chat.id}')
     user = users_cursor.execute('SELECT tg_id, class_id FROM users WHERE tg_id = ?',
                                 (message.chat.id,)).fetchone()
-    if user is None:
-        await add_user_to_db(message.chat.id, f'@{message.from_user.username}')
-        await select_class(message, state)
+    if await sub_verification(bot.get_chat_member(chat_id="@gymn33_bot_news", user_id=message.from_user.id)):
+        if user is None:
+            await add_user_to_db(message.chat.id, f'@{message.from_user.username}')
+            await select_class(message, state)
 
-    elif user[1] == "":
-        await select_class(message, state)
+        elif user[1] == "":
+            await select_class(message, state)
+        else:
+            await message.answer('Ты уже зарегистрирован! Для смены класса регистрации используй <b>/change</b>', parse_mode='html')
     else:
-        await message.answer('Ты уже зарегистрирован! Для сброса регистрации используй <b>/unregister</b>', parse_mode='html')
-
+        await message.answer('Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!')
 
 async def select_class(message: types.Message, state: FSMContext):
     # Отправляем сообщение и сохраняем его ID в состоянии
     sent_message = await message.answer(
         f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\n"
         "Напиши класс в формате <b>11Т</b> пиши без пробелов. Список доступных классов можешь посмотреть в закрепленном сообщении: @gymn33_bot_news\n"
-        "Теперь напиши свой класс: ", 
+        "Теперь напиши свой класс: ",
         parse_mode='html'
     )
-    
+
     # Сохраняем ID сообщения в состоянии
     await state.update_data(class_message_id=sent_message.message_id)
     await Class_id.wait_for_class.set()
@@ -401,23 +398,25 @@ class Class_id(StatesGroup):
 async def proccess_select_class(message: types.Message, state: FSMContext):
     user_class = message.text.upper()
     user_data = await state.get_data()
-    
+
     user_schedule = await get_class_schedule(schedule, user_class)
 
     if user_schedule:
         await save_user_schedule(message.chat.id, user_class, schedule)
         await complete_class(message, state)  # Передаем state
-        logger.info(f'Пользователь {message.chat.id} ввел класс {user_class} и расписание сохранено.')
+        logger.info(
+            f'Пользователь {message.chat.id} ввел класс {user_class} и расписание сохранено.')
     else:
         await message.answer("Расписание для указанного класса не найдено. Пожалуйста, проверьте правильность ввода и повторите /start.")
-        logger.warning(f'Расписание не найдено для класса {user_class} от пользователя {message.chat.id}.')
-    
+        logger.warning(
+            f'Расписание не найдено для класса {user_class} от пользователя {message.chat.id}.')
+
     await state.finish()
 
 
 async def complete_class(message: types.Message, state: FSMContext):
     user_data = await state.get_data()
-    
+
     try:
         # Пытаемся отредактировать оригинальное сообщение
         message_id_to_edit = user_data.get('class_message_id')
@@ -438,6 +437,7 @@ async def complete_class(message: types.Message, state: FSMContext):
     await asyncio.sleep(0.3)
     await start_schedule(message)
 
+
 async def set_class(id: int, class_id: str):
     users_cursor.execute('UPDATE users SET class_id = "{class_name}" WHERE tg_id = "{id}"'.format(
         class_name=class_id, id=id))
@@ -446,7 +446,7 @@ async def set_class(id: int, class_id: str):
 
 async def start_schedule(message: types.Message):
     await bot.send_message(chat_id=message.chat.id,
-                           text='Теперь можешь пользоваться ботом! Для подробной информации о командах используй <b>/help</b>\n\nТакже у нас появился новостной канал со всеми обновлениями бота @gymn33_bot_news!', reply_markup=kb.main,
+                           text='Теперь можешь пользоваться ботом! Для подробной информации о командах используй <b>/help</b>', reply_markup=kb.main,
                            parse_mode='html')
 
 
@@ -468,7 +468,7 @@ async def help(message: types.Message):
 
 7. <b>/notify</b> — Система оповещений. Включите уведомления и бот сам будет присылать вам уведомления о расписании каждый день в 7:45 по МСК.
 
-8. <b>/unregister</b> - Сбросить регистрацию или поменять класс.
+8. <b>/change</b> - Поменять класс.
 
 Если вам нужно больше информации по какой-либо команде, просто напишите её название!''', parse_mode='html')
 
@@ -511,9 +511,9 @@ async def donate(message: types.Message):
 
 # ''', reply_markup=keyboard, parse_mode='html')
 
-@dp.message_handler(commands=['unregister'])
+@dp.message_handler(commands=['change'])
 async def unregister(message: types.Message):
-    await bot.send_message(chat_id=message.chat.id, text='Чтобы сбросить регистрацию, нажми на кнопку ниже', reply_markup=kb.unregister_markup)
+    await bot.send_message(chat_id=message.chat.id, text='Чтобы сменить класс, нажми на кнопку ниже', reply_markup=kb.unregister_markup)
 
 
 # сделать изменения в расписании
@@ -549,7 +549,8 @@ async def handle_report_callback(callback_query: types.CallbackQuery):
         return
 
     await callback_query.answer()
-    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:')
+    kb = types.ReplyKeyboardMarkup().add(types.KeyboardButton('Выход'))
+    await bot.send_message(callback_query.from_user.id, 'Какое сообщение вы хотите отправить?\n\nНапишите его здесь:', reply_markup=kb)
     await ReportMessage.report_message.set()
 
 
@@ -557,6 +558,11 @@ async def send_to_admin(message_text: str, username: str):
     username = username if username else 'Без имени пользователя'
     await bot.send_message(chat_id=int(ADMIN_ID), text=f'🚨 Новый репорт от @{username} \n\nСообщение: {message_text}')
 
+@dp.message_handler(lambda message: message.text.lower() == 'выход', state=ReportMessage.report_message)
+async def process_exit(message: types.Message, state: FSMContext):
+    """Обрабатывает кнопку 'Выход' только в состоянии отправки репорта."""
+    await message.answer("Отмена отправки сообщения.", reply_markup=kb.main)
+    await state.finish()
 
 @dp.message_handler(state=ReportMessage.report_message)
 async def process_report_message(message: types.Message, state: FSMContext):
@@ -570,12 +576,26 @@ async def process_report_message(message: types.Message, state: FSMContext):
 
     await send_to_admin(message_text, username)
     last_report_time[user_id] = time.time()
-    await message.answer('✅ Сообщение успешно отправлено разработчику.')
+    await message.answer('✅ Сообщение успешно отправлено разработчику.', reply_markup=kb.main)
     await state.finish()
 
 
 @dp.message_handler(content_types=['text'])
 async def func(message: types.Message):
+    chat_id = "@gymn33_bot_news"
+    user_id = message.from_user.id
+
+    try:
+        member = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
+        if member.status == "left":
+            await message.answer(
+                'Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!'
+            )
+            return
+    except Exception as e:
+        await message.answer('Произошла ошибка при проверке подписки. Попробуйте снова позже.')
+        return
+
     user_data = users_cursor.execute(
         'SELECT class_id FROM users WHERE tg_id = ?', (message.chat.id,)
     ).fetchone()
@@ -593,7 +613,8 @@ async def func(message: types.Message):
         'Учителя',
         'Оповещения',
         '/unregister',
-        '/start'
+        '/start',
+        'Выход'
     ]
 
     if class_id is None or class_id == 0:
@@ -692,6 +713,7 @@ async def func(message: types.Message):
 
     elif message.text not in formatted_messages:
         await bot.send_message(chat_id=message.chat.id, text='🤖 Я не понимаю эту команду. Используйте /help.')
+
 pagination_cb = CallbackData('teachers', 'action', 'page')
 
 
