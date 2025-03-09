@@ -5638,3 +5638,12 @@ TypeError: 'NoneType' object is not subscriptable
 2025-03-05 18:19:09,047 - INFO - Пользователь 5177632261 ввел класс 11Т и расписание сохранено.
 2025-03-05 18:19:35,777 - INFO - Stop polling...
 2025-03-05 18:19:35,779 - WARNING - Goodbye!
+2025-03-10 00:54:26,330 - INFO - Scheduler started
+2025-03-10 00:54:26,420 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 00:54:26,452 - INFO - Refreshing access_token
+2025-03-10 00:54:29,533 - INFO - Бот запущен!
+2025-03-10 00:54:35,367 - INFO - Scheduler has been shut down
+2025-03-10 00:55:55,688 - INFO - Scheduler started
+2025-03-10 00:55:55,774 - INFO - Attempting refresh to obtain initial access_token
+2025-03-10 00:55:55,806 - INFO - Refreshing access_token
+2025-03-10 00:55:58,078 - INFO - Бот запущен!
