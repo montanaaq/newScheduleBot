@@ -588,6 +588,7 @@ async def func(message: types.Message):
     try:
         member = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
         if member.status == "left":
+            print(12)
             await message.answer(
                 'Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!'
             )
@@ -601,6 +602,7 @@ async def func(message: types.Message):
     ).fetchone()
 
     class_id = user_data[0] if user_data else None
+    print(class_id)
     formatted_messages = [
         'На завтра',
         'На сегодня',
@@ -617,20 +619,14 @@ async def func(message: types.Message):
         'Выход'
     ]
 
-    if class_id is None or class_id == 0:
-        if message.text not in formatted_messages:
-            await bot.send_message(
-                chat_id=message.chat.id,
-                text='Мы не нашли вас в базе данных. Попробуйте <b>/start</b> и повторите попытку! '
-                     'Пожалуйста, укажите класс в формате: <b>11Т</b>',
-                parse_mode='html'
-            )
+    if class_id is None or class_id == '':
+        await bot.send_message(
+            chat_id=message.chat.id,
+            text='Мы не нашли вас в базе данных. Попробуйте <b>/start</b> и повторите попытку! '
+                    'Пожалуйста, укажите класс в формате: <b>11Т</b>',
+            parse_mode='html'
+        )
         return
-
-    users_unregister = [row[0] for row in users_cursor.execute(
-        'SELECT tg_id FROM users WHERE class_id = 0').fetchall()]
-    users_id = [row[0] for row in users_cursor.execute(
-        'SELECT tg_id FROM users').fetchall()]
 
     async def get_schedule_for_day(user_id: int, day: str, msg: str, context: str = 'today'):
         global user_schedule, teachers

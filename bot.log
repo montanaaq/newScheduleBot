@@ -5876,3 +5876,42 @@ aiogram.utils.exceptions.BadRequest: Member list is inaccessible
 2025-03-10 01:27:12,101 - INFO - Команда /start от пользователя 984383301
 2025-03-10 01:28:17,402 - INFO - Stop polling...
 2025-03-10 01:28:17,405 - WARNING - Goodbye!
+2025-03-11 22:15:21,843 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-11 22:15:21,965 - INFO - Attempting refresh to obtain initial access_token
+2025-03-11 22:15:21,997 - INFO - Refreshing access_token
+2025-03-11 22:15:25,850 - INFO - Бот запущен!
+2025-03-11 22:15:27,516 - INFO - Start polling.
+2025-03-11 22:16:25,109 - INFO - Stop polling...
+2025-03-11 22:16:25,111 - WARNING - Goodbye!
+2025-03-11 22:16:33,316 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-11 22:16:33,443 - INFO - Attempting refresh to obtain initial access_token
+2025-03-11 22:16:33,476 - INFO - Refreshing access_token
+2025-03-11 22:16:35,926 - INFO - Бот запущен!
+2025-03-11 22:16:37,441 - INFO - Start polling.
+2025-03-11 22:16:55,113 - INFO - Stop polling...
+2025-03-11 22:16:55,114 - WARNING - Goodbye!
+2025-03-11 22:16:58,590 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-11 22:16:58,728 - INFO - Attempting refresh to obtain initial access_token
+2025-03-11 22:16:58,763 - INFO - Refreshing access_token
+2025-03-11 22:17:01,368 - INFO - Бот запущен!
+2025-03-11 22:17:02,546 - INFO - Start polling.
+2025-03-11 22:17:59,065 - INFO - Stop polling...
+2025-03-11 22:17:59,066 - WARNING - Goodbye!
+2025-03-11 22:18:03,964 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-11 22:18:04,087 - INFO - Attempting refresh to obtain initial access_token
+2025-03-11 22:18:04,122 - INFO - Refreshing access_token
+2025-03-11 22:18:06,717 - INFO - Бот запущен!
+2025-03-11 22:18:07,942 - INFO - Start polling.
+2025-03-11 22:18:37,014 - INFO - Stop polling...
+2025-03-11 22:18:37,016 - WARNING - Goodbye!
+2025-03-11 22:18:41,053 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-11 22:18:41,183 - INFO - Attempting refresh to obtain initial access_token
+2025-03-11 22:18:41,215 - INFO - Refreshing access_token
+2025-03-11 22:18:43,539 - INFO - Бот запущен!
+2025-03-11 22:18:44,727 - INFO - Start polling.
+2025-03-11 22:18:53,396 - INFO - Команда /start от пользователя 984383301
+2025-03-11 22:18:53,735 - INFO - Пользователь @montaanaq добавлен в базу данных!
+2025-03-11 22:18:54,247 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-11 22:18:56,800 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-11 22:19:12,918 - INFO - Stop polling...
+2025-03-11 22:19:12,929 - WARNING - Goodbye!
