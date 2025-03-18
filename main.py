@@ -139,7 +139,7 @@ async def read_data_start():
     classes = [class_name.strip() for class_name in class_data['values'][0]]
     schedule = await sheets.get_schedule_start()
     print("Классы:", classes)
-    pprint(schedule)
+    # pprint(schedule)
 
 
 def get_all_users():
@@ -160,7 +160,7 @@ async def update_data():
 
     while True:
         current_schedule_data = await sheets.read_from_sheets(
-            range_of_read="Расписание!A2:V", type_of_dimension="ROWS"
+            range_of_read="Расписание!A2:AF", type_of_dimension="ROWS"
         )
         current_schedule_hash = await sheets.get_data_hash(current_schedule_data)
 
@@ -403,7 +403,7 @@ async def proccess_select_class(message: types.Message, state: FSMContext):
 
     if user_schedule:
         await save_user_schedule(message.chat.id, user_class, schedule)
-        await complete_class(message, state)  # Передаем state
+        await complete_class(message, state)
         logger.info(
             f'Пользователь {message.chat.id} ввел класс {user_class} и расписание сохранено.')
     else:

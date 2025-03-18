@@ -5915,3 +5915,30 @@ aiogram.utils.exceptions.BadRequest: Member list is inaccessible
 2025-03-11 22:18:56,800 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
 2025-03-11 22:19:12,918 - INFO - Stop polling...
 2025-03-11 22:19:12,929 - WARNING - Goodbye!
+2025-03-18 21:35:17,181 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-18 21:35:17,337 - INFO - Attempting refresh to obtain initial access_token
+2025-03-18 21:35:17,395 - INFO - Refreshing access_token
+2025-03-18 21:35:20,963 - INFO - Бот запущен!
+2025-03-18 21:35:22,564 - INFO - Start polling.
+2025-03-18 21:35:31,668 - INFO - Команда /start от пользователя 984383301
+2025-03-18 21:35:32,432 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-18 21:35:33,481 - WARNING - Расписание не найдено для класса 11Т от пользователя 984383301.
+2025-03-18 21:37:33,974 - INFO - Stop polling...
+2025-03-18 21:37:33,976 - WARNING - Goodbye!
+2025-03-18 21:37:38,828 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-18 21:37:39,017 - INFO - Attempting refresh to obtain initial access_token
+2025-03-18 21:37:39,076 - INFO - Refreshing access_token
+2025-03-18 21:37:41,776 - INFO - Бот запущен!
+2025-03-18 21:37:43,301 - INFO - Start polling.
+2025-03-18 21:37:49,181 - INFO - Stop polling...
+2025-03-18 21:37:49,181 - WARNING - Goodbye!
+2025-03-18 21:37:52,034 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-18 21:37:52,186 - INFO - Attempting refresh to obtain initial access_token
+2025-03-18 21:37:52,241 - INFO - Refreshing access_token
+2025-03-18 21:37:55,529 - INFO - Бот запущен!
+2025-03-18 21:37:58,046 - INFO - Start polling.
+2025-03-18 21:38:02,264 - INFO - Команда /start от пользователя 984383301
+2025-03-18 21:38:02,998 - INFO - Ожидание ввода класса от пользователя 984383301
+2025-03-18 21:38:04,737 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
+2025-03-18 21:38:05,657 - INFO - Stop polling...
+2025-03-18 21:38:05,658 - WARNING - Goodbye!
