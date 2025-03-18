@@ -90,11 +90,11 @@ async def get_data_hash(data):
 async def get_schedule_start():
     global classes
     # Читаем заголовки классов из первой строки (B1:E1)
-    class_data = await read_from_sheets('Расписание!B1:V1', 'ROWS')
+    class_data = await read_from_sheets('Расписание!B1:AF1', 'ROWS')
     classes = [class_name.strip() for class_name in class_data['values'][0]]
 
     # Читаем расписание
-    data = await read_from_sheets(range_of_read="Расписание!A2:V", type_of_dimension="ROWS")
+    data = await read_from_sheets(range_of_read="Расписание!A2:AF", type_of_dimension="ROWS")
     schedule = await parse_schedule(data, classes)
     return schedule
 

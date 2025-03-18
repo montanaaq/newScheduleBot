@@ -135,7 +135,7 @@ async def lifespan(app: FastAPI):
 
 async def read_data_start():
     global classes, schedule
-    class_data = await sheets.read_from_sheets('B1:V1', 'ROWS')
+    class_data = await sheets.read_from_sheets('B1:AF1', 'ROWS')
     classes = [class_name.strip() for class_name in class_data['values'][0]]
     schedule = await sheets.get_schedule_start()
     print("Классы:", classes)
