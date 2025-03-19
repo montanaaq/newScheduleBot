@@ -379,7 +379,7 @@ async def select_class(message: types.Message, state: FSMContext):
     # Отправляем сообщение и сохраняем его ID в состоянии
     sent_message = await message.answer(
         f"Привет <b>{message.from_user.first_name}</b>, это бот для удобного просмотра расписаний занятий в Гимназии №33 г.Казань! \n\n"
-        "Напиши класс в формате <b>11Т</b> пиши без пробелов. Список доступных классов можешь посмотреть в закрепленном сообщении: @gymn33_bot_news\n"
+        "Пиши класс в формате <b>11Т</b> пиши без пробелов. Список доступных классов можешь посмотреть в закрепленном сообщении: @gymn33_bot_news\n"
         "Теперь напиши свой класс: ",
         parse_mode='html'
     )
@@ -622,8 +622,7 @@ async def func(message: types.Message):
     if class_id is None or class_id == '':
         await bot.send_message(
             chat_id=message.chat.id,
-            text='Мы не нашли вас в базе данных. Попробуйте <b>/start</b> и повторите попытку! '
-                    'Пожалуйста, укажите класс в формате: <b>11Т</b>',
+            text='Мы не нашли вас в базе данных. Попробуйте <b>/start</b> и повторите попытку!',
             parse_mode='html'
         )
         return
