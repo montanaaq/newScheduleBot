@@ -664,7 +664,7 @@ async def func(message: types.Message):
 
     elif message.text == 'На завтра':
         tomorrow = (datetime.now().weekday() + 1) % 7
-        await get_schedule_for_day(message.chat.id, str(tomorrow), msg, 'tommorow')
+        await get_schedule_for_day(message.chat.id, str(tomorrow), msg, 'tomorrow')
 
     elif message.text == 'На сегодня':
         today = datetime.now().weekday()

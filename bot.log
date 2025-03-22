@@ -5942,3 +5942,46 @@ aiogram.utils.exceptions.BadRequest: Member list is inaccessible
 2025-03-18 21:38:04,737 - INFO - Пользователь 984383301 ввел класс 11Т и расписание сохранено.
 2025-03-18 21:38:05,657 - INFO - Stop polling...
 2025-03-18 21:38:05,658 - WARNING - Goodbye!
+2025-03-22 15:56:43,351 - WARNING - Goodbye!
+2025-03-22 15:56:47,167 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-22 15:56:47,304 - INFO - Attempting refresh to obtain initial access_token
+2025-03-22 15:56:47,360 - INFO - Refreshing access_token
+2025-03-22 15:56:50,845 - INFO - Бот запущен!
+2025-03-22 15:56:52,700 - INFO - Start polling.
+2025-03-22 15:57:31,955 - INFO - Stop polling...
+2025-03-22 15:57:31,957 - WARNING - Goodbye!
+2025-03-22 15:57:34,919 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-22 15:57:35,059 - INFO - Attempting refresh to obtain initial access_token
+2025-03-22 15:57:35,116 - INFO - Refreshing access_token
+2025-03-22 15:57:38,354 - INFO - Бот запущен!
+2025-03-22 15:57:40,919 - INFO - Start polling.
+2025-03-22 15:58:31,315 - INFO - Stop polling...
+2025-03-22 15:58:31,319 - WARNING - Goodbye!
+2025-03-22 15:58:33,536 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-22 15:58:33,743 - INFO - Attempting refresh to obtain initial access_token
+2025-03-22 15:58:33,831 - INFO - Refreshing access_token
+2025-03-22 15:58:37,532 - INFO - Бот запущен!
+2025-03-22 15:58:39,590 - INFO - Start polling.
+2025-03-22 15:59:15,809 - INFO - Stop polling...
+2025-03-22 15:59:15,811 - WARNING - Goodbye!
+2025-03-22 15:59:19,262 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-22 15:59:19,411 - INFO - Attempting refresh to obtain initial access_token
+2025-03-22 15:59:19,467 - INFO - Refreshing access_token
+2025-03-22 15:59:24,391 - INFO - Бот запущен!
+2025-03-22 15:59:26,471 - INFO - Start polling.
+2025-03-22 15:59:56,967 - INFO - Stop polling...
+2025-03-22 15:59:56,968 - WARNING - Goodbye!
+2025-03-22 15:59:59,331 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-22 15:59:59,473 - INFO - Attempting refresh to obtain initial access_token
+2025-03-22 15:59:59,530 - INFO - Refreshing access_token
+2025-03-22 16:00:02,028 - INFO - Бот запущен!
+2025-03-22 16:00:03,574 - INFO - Start polling.
+2025-03-22 16:00:43,004 - INFO - Stop polling...
+2025-03-22 16:00:43,006 - WARNING - Goodbye!
+2025-03-22 16:00:45,972 - INFO - Bot: Бот поиск машины [@searchh_car_bot]
+2025-03-22 16:00:46,122 - INFO - Attempting refresh to obtain initial access_token
+2025-03-22 16:00:46,177 - INFO - Refreshing access_token
+2025-03-22 16:00:51,210 - INFO - Бот запущен!
+2025-03-22 16:00:55,194 - INFO - Start polling.
+2025-03-22 16:00:59,506 - INFO - Stop polling...
+2025-03-22 16:00:59,507 - WARNING - Goodbye!
