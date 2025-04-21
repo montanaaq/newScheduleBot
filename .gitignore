@@ -3,3 +3,5 @@ config.py
 creds.json
 .env
 .qodo
+.vscode
+.venv

@@ -373,7 +373,7 @@ async def start_command(message: types.Message, state: FSMContext):
         else:
             await message.answer('Ты уже зарегистрирован! Для смены класса регистрации используй <b>/change</b>', parse_mode='html')
     else:
-        await message.answer('Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!')
+        await message.answer('Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!', reply_markup=kb.subscribe)
 
 async def select_class(message: types.Message, state: FSMContext):
     # Отправляем сообщение и сохраняем его ID в состоянии
@@ -590,7 +590,7 @@ async def func(message: types.Message):
         if member.status == "left":
             print(12)
             await message.answer(
-                'Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!'
+                'Чтобы пользоваться ботом, подпишись на наш новостной канал @gymn33_bot_news!', reply_markup=kb.subscribe
             )
             return
     except Exception as e:

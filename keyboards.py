@@ -38,6 +38,10 @@ unregister_markup = InlineKeyboardMarkup(resize_keyboard=True).add(
     InlineKeyboardButton('Сменить класс', callback_data='unreg')
 )
 
+subscribe = InlineKeyboardMarkup().add(
+    InlineKeyboardButton('Подписаться', url='https://t.me/gymn33_bot_news')
+)
+
 on = InlineKeyboardButton('🔔 Включить оповещения',
                           callback_data='on_notifications')
 off = InlineKeyboardButton('🔕 Выключить оповещения',
